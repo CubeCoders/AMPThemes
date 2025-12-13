@@ -6,6 +6,7 @@
  *         And bottled for you
  *
  * Created by KDallas | V1.2 | 23/11/2024 | AMP 2.6.0.x
+ *                    | V1.3 | 19/11/2025 | AMP 2.6.x
  *
  * https://wlab.au/
  *
@@ -30,6 +31,8 @@
 @actionDark:     hsl(208, 79%, 28%); // Pantone / PMS 19-4052 TCX / Classic Blue / #0f4c81
 @actionMed:      hsl(208, 40%, 38%);
 @actionLite:     hsl(208, 40%, 54%);
+@actionRed:      hsl(0, 40%, 38%);
+@actionRedLite:  hsl(0, 40%, 54%);
 
 @greyLight:      #888;
 @colorActive:    #222;
@@ -50,13 +53,15 @@
 @white80pct:     rgba(255, 255, 255, 0.8);
 @white95pct:     rgba(255, 255, 255, 0.95);
 
-@bgRedV2:        hsla(360, 65%, 55%, 0.8);
-@bgRedMuted:     hsla(360, 55%, 55%, 0.65);
+@bgRedV2:        hsla(0, 65%, 55%, 0.8);
+@bgRedMuted:     hsla(0, 55%, 55%, 0.65);
 @bgGreenV2:      hsla(120, 100%, 35%, 0.8);
 @bgGreenMuted:   hsla(120, 80%, 35%, 0.65);
 @bgGradient:     linear-gradient(165deg, @actionDark 0%, @actionMed 45%, @thLite80 100%);
 @btnRedGrad:     linear-gradient(165deg, @actionDark 0%, @bgRedV2   45%, @thLite80 100%);
 @btnGreenGrad:   linear-gradient(165deg, @actionDark 0%, @bgGreenV2 45%, @thLite80 100%);
+
+@ServerEntryImageHue: 180deg;
 
 
 body, .bodyTab, .tabHeaderContainer {
@@ -106,7 +111,7 @@ body, .bodyTab, .tabHeaderContainer {
 
 body {
     background-color: @thBgMain;
-    background-image: url('./background-body.png');
+    background-image: url(../Images/SouthernBlue_body.png);
 }
 
 .tabHeaderContainer {
@@ -198,11 +203,11 @@ body {
                     .ServerEntryImage {
                         &.Blur {
                             &.Offline {
-                                filter: sepia(1) saturate(1.5) hue-rotate(180deg) brightness(0.2) blur(16px);
+                                filter: sepia(1) saturate(1.5) hue-rotate(@ServerEntryImageHue) brightness(0.2) blur(16px);
                             }
                         }
                         &.Offline {
-                            filter: sepia(1) saturate(1.5) hue-rotate(180deg) brightness(0.2);
+                            filter: sepia(1) saturate(1.5) hue-rotate(@ServerEntryImageHue) brightness(0.2);
                         }
                     }
 
@@ -520,7 +525,21 @@ input.searchBox {
     }
 }
 
-input[type=checkbox] + span,
+input[type=checkbox] + span {
+    background-color: @actionMed;
+    &::after {
+        background-color: @actionLite;
+    }
+}
+
+input[type=checkbox].redOff + span {
+    background-color: @actionRed;
+    &::after {
+        background-color: @actionRedLite;
+    }
+}
+
+// indeterminate (neither on or off) needs to override "redOff" class -- which probably shouldn't be set
 input[type=checkbox][indeterminate] + span {
     background-color: @actionMed;
     &::after {

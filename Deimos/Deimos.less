@@ -3,6 +3,7 @@
  *         "Fear" followed "Dread", although the latter is quite pathetic by comparison!
  *
  * Created by KDallas | V1.0 | 14/11/2024 | AMP 2.6.0.x
+ *                    | V1.1 | 19/11/2025 | AMP 2.6.x
  *
  * https://wlab.au/
  *
@@ -14,7 +15,7 @@
 @thBg2nd:        #464037;
 @thBg3rd:        #312d26;
 
-@thLite:         #c48c50;
+@thLite:         #c48c50;   // hsl(31, 49.6%, 54.1%)
 @thLite80:       #c48c50cc;
 @thLite60:       #c48e5099;
 @noticeTrans:    #ff88001a;
@@ -22,6 +23,8 @@
 @actionDark:     #654522;
 @actionMed:      #795f49;
 @actionLite:     #a78e6d;
+@actionRed:      hsl(31, 15%, 38%);
+@actionRedLite:  hsl(31, 15%, 54%);
 
 @greyLight:      #888;
 @colorActive:    #222;
@@ -47,6 +50,8 @@
 @bgRedV2Hov:     rgba(135, 0, 0, 0.7);
 @bgGreenV2:      rgba(0, 185, 0, 0.8);
 @bgGreenV2Hov:   rgba(0, 135, 0, 0.7);
+
+@ServerEntryImageHue: -15deg;
 
 
 body, .bodyTab, .tabHeaderContainer {
@@ -182,11 +187,11 @@ body {
                     .ServerEntryImage {
                         &.Blur {
                             &.Offline {
-                                filter: sepia(1) saturate(2) hue-rotate(-15deg) brightness(0.2) blur(16px);
+                                filter: sepia(1) saturate(2) hue-rotate(@ServerEntryImageHue) brightness(0.2) blur(16px);
                             }
                         }
                         &.Offline {
-                            filter: sepia(1) saturate(2) hue-rotate(-15deg) brightness(0.2);
+                            filter: sepia(1) saturate(2) hue-rotate(@ServerEntryImageHue) brightness(0.2);
                         }
                     }
 
@@ -411,10 +416,18 @@ input.searchBox {
 }
 
 input[type=checkbox] + span,
-input[type=checkbox][indeterminate] + span {
+input[type=checkbox].redOff + span {
     background-color: @actionMed;
     &::after {
         background-color: @actionLite;
+    }
+}
+
+// indeterminate (neither on or off) needs to override "redOff" class -- which probably shouldn't be set
+input[type=checkbox][indeterminate] + span {
+    background-color: @actionRed;
+    &::after {
+        background-color: @actionRedLite;
     }
 }
 
