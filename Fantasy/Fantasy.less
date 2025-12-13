@@ -4,6 +4,7 @@
  *
  * Created by IceOfWraith | V1.4 | 02/02/2024 | AMP 2.5.x.x
  *                KDallas | V2.0 | 16/11/2024 | AMP 2.6.0.x
+ *                        | V2.1 | 19/11/2025 | AMP 2.6.x
  *
  * https://wlab.au/
  *
@@ -26,6 +27,8 @@
 @actionDark:     #652241;
 @actionMed:      #794961;
 @actionLite:     #a76d8b;
+@actionRed:      hsl(0, 15%, 38%);
+@actionRedLite:  hsl(0, 15%, 54%);
 
 @greyLight:      #888;
 @colorActive:    #222;
@@ -48,6 +51,8 @@
 @bgRedV2:        rgba(144, 36, 144, 0.95);
 @bgGreenV2:      rgba(201, 0, 118, 0.95); // bgPink is the new bgGreen!
 @bgGradient:     linear-gradient(165deg, @actionDark 0%, @bgRedV2 45%, @thLite80 100%);
+
+@ServerEntryImageHue: 215deg;
 
 
 body, .bodyTab, .tabHeaderContainer {
@@ -97,7 +102,7 @@ body, .bodyTab, .tabHeaderContainer {
 
 body {
     background-color: black;
-    background-image: url('./background-body.webp');
+    background-image: url(../Images/Fantasy_body.webp);
     backdrop-filter: saturate(1.2) brightness(0.7);
 }
 
@@ -190,11 +195,11 @@ body {
                     .ServerEntryImage {
                         &.Blur {
                             &.Offline {
-                                filter: sepia(1) saturate(1.5) hue-rotate(215deg) brightness(0.2) blur(16px);
+                                filter: sepia(1) saturate(1.5) hue-rotate(@ServerEntryImageHue) brightness(0.2) blur(16px);
                             }
                         }
                         &.Offline {
-                            filter: sepia(1) saturate(1.5) hue-rotate(215deg) brightness(0.2);
+                            filter: sepia(1) saturate(1.5) hue-rotate(@ServerEntryImageHue) brightness(0.2);
                         }
                     }
 
@@ -469,10 +474,18 @@ input.searchBox {
 }
 
 input[type=checkbox] + span,
-input[type=checkbox][indeterminate] + span {
+input[type=checkbox].redOff + span {
     background-color: @actionMed;
     &::after {
         background-color: @actionLite;
+    }
+}
+
+// indeterminate (neither on or off) needs to override "redOff" class -- which probably shouldn't be set
+input[type=checkbox][indeterminate] + span {
+    background-color: @actionRed;
+    &::after {
+        background-color: @actionRedLite;
     }
 }
 
