@@ -1062,3 +1062,42 @@ tbody tr:nth-child(even), thead {
 .scheduleTriggerTask {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.StoreCard h2 {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.StoreCard {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    transition: all 0.3s ease !important;
+}
+
+.StoreCard:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+#diagTable, #currentSessionsTable, #auditLogTable {
+    border-collapse: collapse !important;
+}
+
+.bodyTab > table {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    transition: all 0.3s ease !important;
+}
+
+.bodyTab > table > thead {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bodyTab > table > tbody > tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
