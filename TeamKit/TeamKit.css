@@ -1,0 +1,1110 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* TeamKit theme for AMP (v1.1, 2026)
+   Deep night blue with soft cyan and violet accents, tuned for comfort on long sessions:
+   Inter for body text, off-white text, tinted buttons, rounded cards, cyan to violet accent bar,
+   Orbitron for the main title and menu labels only. Made by the TeamKit community (https://www.teamkit.fr). */
+
+:root {
+  --tk-nuit: #10121a;
+  --tk-fond: #13151e;
+  --tk-surface: #171a24;
+  --tk-carte: #1a1d28;
+  --tk-carte-hover: #20242f;
+  --tk-champ: #141720;
+  --tk-bord: #2b2f3d;
+  --tk-bord-fort: #3b4052;
+
+  --tk-cyan: #00f0ff;          /* petits accents seulement */
+  --tk-cyan-texte: #5fdde8;    /* texte, icônes, liens */
+  --tk-cyan-doux: rgba(0, 240, 255, 0.10);
+  --tk-cyan-bord: rgba(0, 240, 255, 0.38);
+  --tk-violet: #7b2cbf;
+  --tk-violet-clair: #a98ad8;
+  --tk-violet-doux: rgba(123, 44, 191, 0.18);
+
+  --tk-vert: #3ddc97;
+  --tk-ambre: #f0b44c;
+  --tk-rouge: #f06a77;
+  --tk-rose: #f0679f;
+
+  --tk-texte: #e3e6ee;
+  --tk-texte-2: #b9bdcb;
+  --tk-texte-3: #8d92a3;
+
+  --tk-titre: 'Orbitron', 'Segoe UI', sans-serif;
+  --tk-corps: 'Inter', 'Segoe UI', Calibri, sans-serif;
+  --tk-mono: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+
+  --tk-r-petit: 8px;
+  --tk-r: 12px;
+  --tk-r-grand: 18px;
+  --tk-ombre: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --tk-lueur: 0 0 0 1px var(--tk-cyan-bord), 0 0 18px rgba(0, 240, 255, 0.18);
+  --tk-accent: linear-gradient(90deg, var(--tk-cyan) 0%, var(--tk-violet) 100%);
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────── */
+
+html, body {
+  background-color: var(--tk-nuit);
+}
+
+body {
+  color: var(--tk-texte-2);
+  font-family: var(--tk-corps);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(1100px 600px at 85% -10%, rgba(0, 240, 255, 0.07), transparent 60%),
+    radial-gradient(900px 600px at -10% 110%, rgba(123, 44, 191, 0.10), transparent 60%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--tk-texte);
+}
+
+::selection {
+  background: rgba(0, 240, 255, 0.35);
+  color: var(--tk-texte);
+}
+
+a, a:visited {
+  color: var(--tk-cyan-texte);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--tk-texte);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#mainBody,
+.bodyTab {
+  background: transparent;
+}
+
+/* ── Barre du haut : verre fumé + barre d'accent ───────────────────────── */
+
+#barTop {
+  background: rgba(10, 10, 15, 0.78);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--tk-bord);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+#barTop::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--tk-accent);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+#barTop #tabInfo h2,
+#tabInfo h2 {
+  font-family: var(--tk-titre);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.05em;
+  color: var(--tk-texte);
+  margin-top: 11px;
+}
+#barTop #tabInfo.remoteInfo h2 {
+  font-size: 14px;
+  margin-top: 6px;
+}
+#barTop #tabInfo h4,
+#tabInfo h4 {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  color: var(--tk-texte-3);
+  letter-spacing: 0;
+}
+
+#barTop #topSearchBox {
+  background: var(--tk-champ);
+  border: 1px solid var(--tk-bord);
+  border-radius: 999px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+#barTop #topSearchBox:hover,
+#barTop #topSearchBox:focus-within {
+  background: var(--tk-champ);
+  border-color: var(--tk-cyan-bord);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.08);
+}
+#barTop #topSearchBox input.searchBox {
+  background: transparent;
+  border: none;
+  color: var(--tk-texte);
+  padding-left: 16px;
+}
+
+/* ── Menu latéral ──────────────────────────────────────────────────────── */
+
+#sideMenuContainer,
+.sideItemList,
+.subMenuWell {
+  background: var(--tk-fond);
+}
+#sideMenuContainer {
+  border-right: 1px solid var(--tk-bord);
+}
+.sideItemList {
+  box-shadow: none;
+  border-left: 1px solid var(--tk-bord);
+}
+
+.menuTitle {
+  font-family: var(--tk-titre);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tk-texte-3);
+  padding: 22px 20px 10px;
+}
+
+#sideMenu a {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--tk-texte-2);
+  margin: 2px 10px;
+  border-radius: 10px;
+  transition: background-color 0.15s, color 0.15s;
+}
+#sideMenu a .mat-icon {
+  color: var(--tk-texte-3);
+  transition: color 0.15s;
+}
+#sideMenu a:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--tk-texte);
+}
+#sideMenu a:hover .mat-icon {
+  color: var(--tk-cyan-texte);
+}
+#sideMenu a:active {
+  background-color: var(--tk-cyan-doux);
+}
+#sideMenu a.selected {
+  color: var(--tk-texte);
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0.16), rgba(123, 44, 191, 0.10));
+  box-shadow: inset 3px 0 0 var(--tk-cyan);
+}
+#sideMenu a.selected .mat-icon {
+  color: var(--tk-cyan-texte);
+}
+#sideMenu a.padBottom {
+  border-bottom: none;
+  position: relative;
+  margin-bottom: 18px;
+}
+#sideMenu a.padBottom::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: -10px;
+  height: 1px;
+  background: var(--tk-bord);
+}
+#sideMenu a.hasWarning {
+  background-color: rgba(255, 170, 0, 0.08);
+}
+#sideMenu a.hasNotice {
+  background-color: rgba(0, 240, 255, 0.06);
+}
+#sideMenu a div .subtitle,
+#sideMenu a .warn {
+  color: var(--tk-ambre);
+}
+#sideMenu a.info .warn,
+#sideMenu a.info .subtitle {
+  color: var(--tk-cyan-texte);
+}
+
+#userInfo {
+  color: var(--tk-texte-2);
+  border-radius: 10px;
+}
+#userInfo:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+#userInfo.opened {
+  background: var(--tk-surface);
+  border-bottom: 1px solid var(--tk-bord);
+  box-shadow: var(--tk-ombre);
+}
+
+/* ── Onglets ───────────────────────────────────────────────────────────── */
+
+.tabHeaderContainer {
+  background: rgba(10, 10, 15, 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--tk-bord);
+  color: var(--tk-texte-2);
+  padding-top: 6px;
+}
+.tabHeaderContainer .tabHeader {
+  background: transparent;
+  color: var(--tk-texte-3);
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  letter-spacing: 0;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+.tabHeaderContainer .tabHeader .mat-icon {
+  color: rgba(255, 255, 255, 0.04);
+}
+.tabHeaderContainer .tabHeader:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--tk-texte);
+}
+.tabHeaderContainer .tabHeader.active,
+.tabHeaderContainer .tabHeader.active:hover,
+.tabHeaderContainer .tabHeader:active,
+.tabHeaderContainer .tabHeader.active:active {
+  background-color: var(--tk-cyan-doux);
+  color: var(--tk-texte);
+  border-bottom-color: var(--tk-cyan);
+  box-shadow: none;
+}
+.tabHeaderContainer .tabHeader.active .mat-icon {
+  color: rgba(0, 240, 255, 0.10);
+}
+
+/* ── Boutons : teintés, arrondis ───────────────────────────────────────── */
+
+button,
+.button,
+input[type=button],
+input[type=submit] {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--tk-texte);
+  background-color: var(--tk-carte);
+  border: 1px solid var(--tk-bord);
+  border-radius: 10px;
+  box-shadow: none;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+button:hover,
+.button:hover,
+input[type=button]:hover,
+input[type=submit]:hover {
+  background-color: var(--tk-carte-hover);
+  border-color: var(--tk-cyan-bord);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.12);
+}
+button:active,
+.button:active,
+input[type=button]:active,
+input[type=submit]:active {
+  background-color: var(--tk-cyan-doux);
+}
+button:focus-visible,
+.button:focus-visible {
+  outline: 2px solid var(--tk-cyan);
+  outline-offset: 2px;
+}
+button:disabled,
+button.disabled,
+.button.disabled,
+input[type=submit]:disabled {
+  opacity: 0.45;
+  box-shadow: none;
+}
+
+.bgGreen, .bgGreen.button {
+  background-color: rgba(0, 255, 136, 0.12);
+  border: 1px solid rgba(0, 255, 136, 0.45);
+  color: #a3e9c8;
+}
+.bgGreen:hover, .bgGreen.button:hover {
+  background-color: rgba(0, 255, 136, 0.22);
+  border-color: var(--tk-vert);
+  box-shadow: 0 0 14px rgba(0, 255, 136, 0.18);
+  color: var(--tk-texte);
+}
+.bgRed, .bgRed.button {
+  background-color: rgba(255, 77, 94, 0.12);
+  border: 1px solid rgba(255, 77, 94, 0.5);
+  color: #f6b0b8;
+}
+.bgRed:hover, .bgRed.button:hover {
+  background-color: rgba(255, 77, 94, 0.24);
+  border-color: var(--tk-rouge);
+  box-shadow: 0 0 14px rgba(255, 77, 94, 0.2);
+  color: var(--tk-texte);
+}
+.bgBlue, .bgInfo {
+  background-color: var(--tk-cyan-doux);
+  border: 1px solid var(--tk-cyan-bord);
+  color: #a9eef3;
+}
+.bgBlue:hover, .bgInfo:hover {
+  background-color: rgba(0, 240, 255, 0.22);
+  border-color: var(--tk-cyan);
+  color: var(--tk-texte);
+}
+.bgAmber {
+  background-color: rgba(255, 170, 0, 0.12);
+  border: 1px solid rgba(255, 170, 0, 0.5);
+  color: #f3d08f;
+}
+.bgAmber:hover {
+  background-color: rgba(255, 170, 0, 0.24);
+  border-color: var(--tk-ambre);
+  color: var(--tk-texte);
+}
+.bgPurple {
+  background-color: var(--tk-violet-doux);
+  border: 1px solid rgba(169, 107, 232, 0.55);
+  color: #cdb8ee;
+}
+.bgPurple:hover {
+  background-color: rgba(123, 44, 191, 0.32);
+  border-color: var(--tk-violet-clair);
+  color: var(--tk-texte);
+}
+.bgPink {
+  background-color: rgba(255, 0, 110, 0.12);
+  border: 1px solid rgba(255, 0, 110, 0.5);
+  color: #f3a3c6;
+}
+.bgPink:hover {
+  background-color: rgba(255, 0, 110, 0.24);
+  border-color: var(--tk-rose);
+  color: var(--tk-texte);
+}
+.bgGray {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--tk-bord);
+  color: var(--tk-texte-2);
+}
+.bgGray:hover {
+  background-color: rgba(255, 255, 255, 0.09);
+  color: var(--tk-texte);
+}
+
+.iconButton {
+  background-color: var(--tk-carte);
+  border-color: var(--tk-bord);
+}
+.iconButton:hover {
+  background-color: var(--tk-carte-hover);
+  border-color: var(--tk-cyan-bord);
+}
+.iconButton.toggled {
+  background-color: var(--tk-cyan-doux);
+  border-color: var(--tk-cyan-bord);
+  color: var(--tk-cyan-texte);
+}
+
+button#loginButton {
+  background: var(--tk-accent);
+  border: none;
+  color: var(--tk-texte);
+  font-family: var(--tk-titre);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  box-shadow: 0 8px 24px rgba(0, 240, 255, 0.18);
+}
+button#loginButton:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.32);
+}
+
+/* ── Champs ────────────────────────────────────────────────────────────── */
+
+input[type=text],
+input[type=password],
+input[type=url],
+input[type=number],
+input[type=email],
+input[type=search],
+select,
+textarea,
+.popupTrigger {
+  background-color: var(--tk-champ);
+  color: var(--tk-texte);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r-petit);
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input[type=text]:hover,
+input[type=password]:hover,
+input[type=url]:hover,
+input[type=number]:hover,
+input[type=email]:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--tk-bord-fort);
+}
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=url]:focus,
+input[type=number]:focus,
+input[type=email]:focus,
+input[type=search]:focus,
+select:focus,
+textarea:focus,
+.popupTrigger:focus {
+  outline: none;
+  border-color: var(--tk-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.14);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--tk-texte-3);
+}
+select option {
+  background-color: var(--tk-surface);
+  color: var(--tk-texte);
+}
+input.searchBox,
+input.searchBox:focus {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Interrupteurs */
+input[type=checkbox] + span,
+input[type=checkbox].redOff + span {
+  background-color: var(--tk-bord);
+}
+input[type=checkbox] + span::after,
+input[type=checkbox].redOff + span::after {
+  background-color: var(--tk-texte-3);
+}
+input[type=checkbox]:checked + span {
+  background-color: rgba(0, 240, 255, 0.35);
+}
+input[type=checkbox]:checked + span::after {
+  background-color: var(--tk-cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+}
+input[type=checkbox][indeterminate] + span {
+  background-color: var(--tk-violet-doux);
+}
+input[type=checkbox][indeterminate] + span::after {
+  background-color: var(--tk-violet-clair);
+}
+
+/* ── Réglages : cartes ─────────────────────────────────────────────────── */
+
+.settingsGroup h3 {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tk-texte);
+  border-bottom: 1px solid var(--tk-bord);
+  padding-bottom: 8px;
+}
+.settingsGroup .groupBody .settingContainer {
+  background-color: var(--tk-carte);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r);
+  box-shadow: none;
+  transition: border-color 0.2s, background-color 0.2s, outline-color 0.5s;
+}
+.settingsGroup .groupBody .settingContainer:hover {
+  border-color: var(--tk-bord-fort);
+  background-color: var(--tk-carte-hover);
+}
+.settingsGroup .groupBody .settingContainer:focus-within {
+  border-color: var(--tk-cyan-bord);
+}
+.settingsGroup .groupBody .settingContainer.highlighted {
+  outline-color: var(--tk-ambre);
+}
+.settingsGroup .groupBody .settingContainer.warning {
+  outline-color: var(--tk-rouge);
+}
+.settingsGroup .groupBody .settingLabel > div > span:first-child {
+  color: var(--tk-texte);
+  font-weight: 600;
+}
+.settingsGroup .groupBody .settingLabel .settingDescription,
+.permNodeDescription,
+.permissionDescriptions div .description {
+  color: var(--tk-texte-3);
+  font-size: 13px;
+  line-height: 1.35;
+}
+.settingsGroup .groupBody .settingLabel .settingDescription a {
+  color: var(--tk-cyan-texte);
+}
+.settingsGroup .groupBody .settingLabel span.inputFieldSuffix {
+  color: var(--tk-texte-3);
+}
+.settingsGroup .groupBody .settingContainer .settingWarning,
+.settingsGroup .groupBody .settingInfo {
+  color: var(--tk-cyan-texte);
+}
+
+.well.info {
+  border: 1px solid var(--tk-cyan-bord);
+  background-color: rgba(0, 240, 255, 0.05);
+  border-radius: var(--tk-r);
+}
+.well.info .mat-icon {
+  color: var(--tk-cyan-texte);
+}
+p.inlineWarning {
+  color: var(--tk-ambre);
+}
+
+/* ── Liste des instances (ADS) ─────────────────────────────────────────── */
+
+.ServerGroup .ServerGroupHeader,
+.ServerGroupContainer .ServerGroup.Online .ServerGroupHeader {
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0.10), rgba(123, 44, 191, 0.10));
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r);
+  text-shadow: none;
+}
+.ServerGroup.Offline .ServerGroupHeader,
+.ServerGroup.Unavailable .ServerGroupHeader,
+.ServerGroupContainer .ServerGroup.Offline .ServerGroupHeader,
+.ServerGroupContainer .ServerGroup.Unavailable .ServerGroupHeader {
+  background: rgba(255, 77, 94, 0.12);
+  border-color: rgba(255, 77, 94, 0.45);
+}
+.ServerGroup.Pending .ServerGroupHeader,
+.ServerGroupContainer .ServerGroup.Pending .ServerGroupHeader {
+  background: rgba(255, 170, 0, 0.12);
+  border-color: rgba(255, 170, 0, 0.45);
+}
+.ServerGroup .ServerGroupHeader h3 {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0;
+}
+.SystemInfo {
+  color: var(--tk-texte-3);
+  font-weight: 600;
+}
+
+.InstanceList .ServerEntry {
+  background-color: var(--tk-carte);
+  border: 1px solid var(--tk-bord);
+  border-left-width: 3px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+  transition: transform 0.18s ease, border-color 0.18s, box-shadow 0.18s;
+}
+.InstanceList .ServerEntry:hover {
+  outline: none;
+  transform: translateY(-2px);
+  border-color: var(--tk-cyan-bord);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 22px rgba(0, 240, 255, 0.10);
+}
+.InstanceList .ServerEntry.statusRunning { border-left-color: var(--tk-vert); }
+.InstanceList .ServerEntry.statusBusy { border-left-color: var(--tk-ambre); }
+.InstanceList .ServerEntry.statusNotice { border-left-color: var(--tk-cyan); }
+.InstanceList .ServerEntry.statusFail { border-left-color: var(--tk-rouge); }
+.InstanceList .ServerEntry.statusIdle { border-left-color: var(--tk-violet-clair); }
+.InstanceList .ServerEntry.statusOffline,
+.InstanceList .ServerEntry.statusSuspended { border-left-color: var(--tk-bord-fort); }
+
+.InstanceList .ServerEntry .ServerEntryImage {
+  filter: brightness(0.42) saturate(1.1);
+}
+.InstanceList .ServerEntry .ServerEntryImage.Blur {
+  filter: brightness(0.38) saturate(1.2) blur(18px);
+}
+.InstanceList .ServerEntry .ServerEntryImage.Offline,
+.ServerGroupContainer .ServerGroup.Online .InstanceList .ServerEntry .ServerEntryImage.Offline {
+  filter: grayscale(1) brightness(0.22) !important;
+}
+.InstanceList .ServerEntry .ServerEntryImage.Blur.Offline,
+.ServerGroupContainer .ServerGroup.Online .InstanceList .ServerEntry .ServerEntryImage.Blur.Offline {
+  filter: grayscale(1) brightness(0.18) blur(18px) !important;
+}
+
+.InstanceList .ServerEntry .ServerEntryTop .ServerEntryHeader h3 {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0;
+  color: var(--tk-texte);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+.InstanceList .ServerEntry .ServerEntryTop .ServerEntryHeader h5,
+.InstanceList .ServerEntry .ServerEntryTop .ServerEntryHeader h4 {
+  font-family: var(--tk-mono);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--tk-texte-2);
+}
+
+.InstanceList .ServerEntry .ServerEntryTop .ServerEntryStatus {
+  font-weight: 600;
+  letter-spacing: 0;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.InstanceList .ServerEntry .ServerEntryMetrics .ServerEntryMetric {
+  background-color: rgba(10, 10, 15, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.InstanceList .ServerEntry .ServerEntryMetrics .ServerEntryMetric .mat-icon {
+  color: var(--tk-cyan-texte);
+}
+.InstanceList .ServerEntry .ServerEntryMetrics .ServerEntryMetric .MetricText h3 {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tk-texte-3);
+}
+
+.InstanceList .ServerEntry .ServerEntryActions {
+  border-radius: 10px;
+  border: 1px solid var(--tk-bord);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.InstanceList .ServerEntry .ServerEntryActions .iconButton {
+  background-color: rgba(10, 10, 15, 0.75);
+  border: none;
+  border-radius: 0;
+}
+.InstanceList .ServerEntry .ServerEntryActions .iconButton:hover {
+  background-color: var(--tk-cyan-doux);
+  color: var(--tk-cyan-texte);
+  box-shadow: none;
+}
+.InstanceList .ServerEntry .ServerEntryActions .iconButton.bgGreen {
+  background-color: rgba(0, 255, 136, 0.16);
+  color: var(--tk-vert);
+}
+.InstanceList .ServerEntry .ServerEntryActions .iconButton.bgRed {
+  background-color: rgba(255, 77, 94, 0.16);
+  color: var(--tk-rouge);
+}
+
+.InstanceList .ServerEntry.NewServerEntry,
+.ServerGroupContainer .ServerGroup.Online .InstanceList .ServerEntry.NewServerEntry {
+  background: transparent;
+  border: 1px dashed var(--tk-cyan-bord);
+  border-left-width: 1px;
+  box-shadow: none;
+}
+.InstanceList .ServerEntry.NewServerEntry:hover {
+  background: rgba(0, 240, 255, 0.05);
+}
+.InstanceList .ServerEntry.NewServerEntry .ServerEntryHeader {
+  background: transparent;
+}
+.InstanceList .ServerEntry.NewServerEntry span {
+  color: var(--tk-cyan-texte);
+  font-family: var(--tk-corps);
+  font-weight: 500;
+}
+
+/* ── Page Status : jauges et blocs ─────────────────────────────────────── */
+
+.circleChart svg circle {
+  stroke: rgba(255, 255, 255, 0.06);
+}
+.circleChart svg circle.value {
+  stroke: var(--tk-cyan);
+  filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.55));
+}
+.circleChart h2 {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.circleChart h4 {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  color: var(--tk-texte-3);
+}
+
+#statusActions > div {
+  background-color: var(--tk-carte);
+  border: 1px solid var(--tk-bord);
+  border-radius: 16px;
+}
+#statusActions h2 {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.AppStatus {
+  color: var(--tk-texte);
+  font-weight: 600;
+}
+
+/* ── Console ───────────────────────────────────────────────────────────── */
+
+.consoleContents,
+.consoleEntry {
+  font-family: var(--tk-mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.consoleEntry .consoleName {
+  color: var(--tk-cyan-texte);
+}
+.consoleEntry .consoleName:hover {
+  color: var(--tk-texte);
+}
+.consoleEntry .consoleTimestamp {
+  color: var(--tk-texte-3);
+}
+
+/* ── Tableaux ──────────────────────────────────────────────────────────── */
+
+thead {
+  border-bottom: 1px solid var(--tk-bord);
+}
+th {
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tk-texte-3);
+}
+tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+table.noZebra tbody tr:nth-child(even) {
+  background-color: transparent;
+}
+table.rowSelect tbody tr:hover {
+  background-color: rgba(0, 240, 255, 0.06);
+}
+table.rowSelect tbody tr:active {
+  background-color: var(--tk-cyan-doux);
+}
+
+/* ── Fenêtres ──────────────────────────────────────────────────────────── */
+
+.modalbg {
+  background-color: rgba(5, 5, 9, 0.72);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.modalpanel {
+  background-color: var(--tk-surface);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r-grand);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 240, 255, 0.06);
+}
+.modalpanel #modaltitle {
+  background-color: transparent;
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0;
+  color: var(--tk-texte);
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--tk-bord);
+  position: relative;
+}
+.modalpanel #modaltitle::after {
+  content: '';
+  position: absolute;
+  left: 20px;
+  bottom: -1px;
+  width: 64px;
+  height: 2px;
+  background: var(--tk-accent);
+}
+.modalpanel .modalcontents #modalsubtitle {
+  color: var(--tk-texte);
+  font-weight: 600;
+}
+.modalpanel .modalbuttons {
+  background-color: var(--tk-fond);
+  border-top: 1px solid var(--tk-bord);
+}
+
+.contextMenu,
+.contextMenu.contextMenu {
+  background-color: var(--tk-surface);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r);
+  box-shadow: var(--tk-ombre);
+}
+.contextMenu .flexButtonGroup .buttonListSeparator {
+  border-bottom: 1px solid var(--tk-bord);
+}
+
+.wizardTab .wizardContents {
+  background-color: var(--tk-surface);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r-grand);
+}
+.wizardTab .wizardContents h2 {
+  background-color: transparent;
+  font-family: var(--tk-corps);
+  font-weight: 600;
+  letter-spacing: 0;
+  border-bottom: 1px solid var(--tk-bord);
+}
+
+/* ── Notifications et recherche ────────────────────────────────────────── */
+
+#notificationContainer {
+  background-color: var(--tk-surface);
+  border-left: 1px solid var(--tk-bord);
+}
+#notificationContainer .notificationBanner {
+  background-color: var(--tk-carte);
+  font-family: var(--tk-corps);
+  letter-spacing: 0;
+}
+#notificationContainer .notification:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+#notificationContainer .notification .notificationProgessContainer .notificationProgressBar::before {
+  background-color: rgba(0, 0, 0, 0.4);
+  background-image: var(--tk-accent);
+}
+
+#searchResults {
+  background-color: rgba(13, 13, 20, 0.97);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r);
+  color: var(--tk-texte-2);
+}
+#searchResults .searchResultCategory .searchResultCategoryInfo {
+  background-color: var(--tk-carte);
+}
+#searchResults .searchResult {
+  border-bottom: 1px solid var(--tk-bord);
+}
+
+.itemTag {
+  background-color: var(--tk-cyan-doux);
+  border: 1px solid var(--tk-cyan-bord);
+  color: var(--tk-cyan-texte);
+  border-radius: 999px;
+}
+
+/* ── Gestionnaire de fichiers ──────────────────────────────────────────── */
+
+#fileManagerList {
+  background-color: rgba(10, 10, 15, 0.5);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r);
+}
+#fileManagerList .fileManagerEntry {
+  border-radius: var(--tk-r-petit);
+}
+#fileManagerList .fileManagerEntry:hover {
+  background: rgba(0, 240, 255, 0.06);
+  color: var(--tk-texte);
+}
+#fileManagerList .fileManagerEntry.selected {
+  background: var(--tk-cyan-doux);
+  color: var(--tk-texte);
+  box-shadow: inset 3px 0 0 var(--tk-cyan);
+}
+#fileManagerList .fmIsDirectory .fmMainIcon,
+#fileManagerList .fmIsDirectory .subIcon,
+#fileManagerList .fmIsArchive .fmMainIcon,
+#fileManagerList .fmIsVirtual .fmMainIcon,
+#fileManagerInfo .fmInfoIcon.fmIsDirectory,
+#fileManagerInfo .fmInfoIcon.fmIsArchive {
+  color: var(--tk-cyan-texte) !important;
+}
+#fileManagerHeader .fmPathSegment,
+#fileManagerHeader .fmPathSegment:nth-child(even) {
+  background-color: var(--tk-carte);
+}
+#fileManagerHeader .fmPathSegment::after,
+#fileManagerHeader .fmPathSegment:nth-child(even)::after {
+  border-left-color: var(--tk-carte);
+}
+#fileManagerHeader .fmPathSegment:hover,
+#fileManagerHeader .fmPathSegment:nth-child(even):hover {
+  background-color: var(--tk-cyan-doux);
+  color: var(--tk-texte);
+}
+#fileManagerHeader .fmPathSegment:hover::after,
+#fileManagerHeader .fmPathSegment:nth-child(even):hover::after {
+  border-left-color: rgba(0, 240, 255, 0.12);
+}
+
+/* ── Planificateur, sauvegardes, stockage ──────────────────────────────── */
+
+.scheduleTriggerInfo {
+  background-color: var(--tk-carte);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r);
+}
+.scheduleTriggerInfo .scheduleTriggerDescription {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+.scheduleTriggerInfo .scheduleTriggerDescription .scheduleTriggerHeaderItem .scheduleHeader {
+  color: var(--tk-texte-3);
+}
+.scheduleTriggerInfo .scheduleTriggerTask {
+  border-color: var(--tk-bord);
+}
+
+#tab_LocalFileBackupPlugin_Backups #backupsList .backupListing:hover {
+  background-color: rgba(0, 240, 255, 0.06);
+}
+#tab_LocalFileBackupPlugin_Backups #backupsList .backupListing.selected,
+#tab_LocalFileBackupPlugin_Backups #backupsList .backupListing:active {
+  background-color: var(--tk-cyan-doux);
+}
+
+.datastoreContainer .datastoreItem {
+  background-color: var(--tk-carte);
+  border: 1px solid var(--tk-bord);
+  border-radius: var(--tk-r);
+  text-shadow: none;
+}
+.datastoreContainer .newDatastoreItem {
+  background-color: transparent;
+  border: 1px dashed var(--tk-cyan-bord);
+  border-radius: var(--tk-r);
+}
+.datastoreContainer .newDatastoreItem .plusIcon {
+  color: var(--tk-cyan-texte);
+}
+
+.splitViewInfo.splitViewInfo {
+  background-color: var(--tk-surface);
+}
+.itemList .item:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--tk-texte);
+}
+.itemList .item.selected {
+  background-color: var(--tk-cyan-doux);
+  color: var(--tk-texte);
+  border-right: 3px solid var(--tk-cyan);
+}
+
+/* ── Écran de connexion ────────────────────────────────────────────────── */
+
+#loginContainer {
+  background: rgba(18, 18, 26, 0.88);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 240, 255, 0.22);
+  border-radius: 22px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65), 0 0 70px rgba(0, 240, 255, 0.08);
+  overflow: hidden;
+}
+#loginContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--tk-accent);
+}
+#loginContainer #loginModuleInfo h2 {
+  font-family: var(--tk-titre);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--tk-texte);
+}
+#loginContainer #loginModuleInfo h2::before {
+  content: 'TEAMKIT';
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--tk-cyan-texte);
+  margin-bottom: 6px;
+}
+#loginContainer #loginModuleInfo h4,
+#loginContainer #loginModuleInfo h6 {
+  color: var(--tk-texte-3);
+}
+#loginContainer #loginForm input {
+  background-color: var(--tk-champ);
+  color: var(--tk-texte);
+}
+#loginSplash iframe {
+  background-color: transparent;
+}
+
+/* ── Divers ────────────────────────────────────────────────────────────── */
+
+.loader2 {
+  border-top-color: var(--tk-cyan);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #23232f;
+  border: 2px solid var(--tk-nuit);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2f3a48;
+}
+* {
+  scrollbar-color: #23232f transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .InstanceList .ServerEntry:hover {
+    transform: none;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  #sideMenu a {
+    margin: 2px 6px;
+  }
+  #loginContainer {
+    border-radius: 0;
+    border: none;
+  }
+}

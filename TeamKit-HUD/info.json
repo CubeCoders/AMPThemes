@@ -1,0 +1,14 @@
+{
+  "Name": "TeamKit-HUD",
+  "Version": "1.2",
+  "UpdatedDate": "2026/10/06",
+  "Description": "The TeamKit dark theme with a game-HUD Status page: three large glowing gauges (CPU, memory, players) centred above big round start, stop and restart buttons.",
+  "URL": "https://www.teamkit.fr",
+  "Author": "TeamKit",
+  "Tags": [
+    "Contributor",
+    "Dark",
+    "Cyan",
+    "Layout"
+  ]
+}
