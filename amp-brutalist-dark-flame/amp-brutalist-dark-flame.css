@@ -1,0 +1,1931 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ==========================================================================
+   amp-brutalist-dark-flame — neo-brutalist theme for CubeCoders AMP
+   v2.0 · 2026-10-06 · Jayden
+   Mode: DARK · scheme: flame
+
+   The rules (applied everywhere, no exceptions):
+   - Every container: 3px solid ink line, square corners, hard offset shadow.
+   - Every control: same line, smaller shadow; hover lifts, press sinks flat.
+   - Active / selected = yellow + ink. Primary action + focus = blue.
+   - Status = bright flat fills with ink text, identical in light and dark.
+   - Headings: Archivo Black caps. Labels: mono caps. Body: Public Sans.
+   - Visual-only: no layout rewrites, so AMP updates won't break it.
+   ========================================================================== */
+
+/* Brick logo (a generic 2-stud toy brick) */
+:root {
+    --b-font: 'Public Sans', 'Segoe UI', system-ui, sans-serif;
+    --b-display: 'Archivo Black', 'Public Sans', 'Arial Black', sans-serif;
+    --b-mono: 'JetBrains Mono', Consolas, monospace;
+    --b-yellow: #ffd400;
+    --b-blue: #2f5bff;
+    --b-green: #00d27a;
+    --b-red: #ff5a5a;
+    --b-orange: #ffa630;
+    --b-sky: #7cc4ff;
+    --b-purple: #b38cff;
+    --b-pink: #ff8ad8;
+    --t-accent: #ffd400;
+    --b-yellow: #ff6a1f;
+    --t-accent: #ff6a1f;
+    --b-page: #1b1410;
+    --b-chrome: #251b16;
+    --b-surface: #2e221c;
+    --b-surface-2: #3a2a21;
+    --b-field: #12141a;
+    --b-inset: rgba(0, 0, 0, .35);
+    --b-line: #07080b;
+    --b-shadow: #07080b;
+    --b-ink: #ecebe6;
+    --b-ink-2: #c3c6cf;
+    --b-ink-3: #8a90a0;
+    --b-hover: #553423;
+    --b-link: #ecebe6;
+    --b-muted-fill: #4a5063;
+    --b-glyph: none;
+    --b-logo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 100'%3E%3Crect x='14' y='34' width='120' height='60' fill='%2307080b'/%3E%3Crect x='22' y='10' width='34' height='20' fill='%23ff6a1f' stroke='%23111111' stroke-width='6'/%3E%3Crect x='76' y='10' width='34' height='20' fill='%23ff6a1f' stroke='%23111111' stroke-width='6'/%3E%3Crect x='6' y='26' width='120' height='60' fill='%23ff6a1f' stroke='%23111111' stroke-width='6'/%3E%3Crect x='28' y='15' width='8' height='6' fill='%23ffffff'/%3E%3Crect x='82' y='15' width='8' height='6' fill='%23ffffff'/%3E%3Crect x='16' y='36' width='18' height='7' fill='%23ffffff'/%3E%3C/svg%3E");
+    color-scheme: dark;
+}
+
+
+/* ---------- Motion ---------- */
+@keyframes bz-blink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: .25; } }
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+body {
+    background: var(--b-page) !important;
+    color: var(--b-ink);
+    font-family: var(--b-font);
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+}
+#mainBody, .bodyTab, .tabBody { background: transparent !important; color: var(--b-ink); }
+
+h1, h2, .menuTitle, .ServerGroupName > span, #modaltitle, .wizardTab .wizardContents h2,
+.analyticsSection h1, .sectionHeader h1, #fileManagerInfo h3 {
+    font-family: var(--b-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: .01em;
+    text-shadow: none !important;
+    color: var(--b-ink);
+}
+h3, h4, h5 { text-shadow: none !important; }
+p, span, label, td, th { text-shadow: none; }
+
+a { color: var(--b-link); font-weight: 700; text-decoration-line: underline; text-decoration-color: var(--b-yellow); text-decoration-thickness: 3px; text-underline-offset: 3px; }
+a:hover { background: var(--b-yellow); color: #111111; }
+
+::selection { background: var(--b-yellow); color: #111111; }
+
+:focus-visible { outline: none !important; }
+/* Keyboard focus: the element's hard shadow turns yellow (same as text
+   fields), so nothing is drawn over or under its neighbours */
+button:focus-visible, .button:focus-visible, input[type=button]:focus-visible, input[type=submit]:focus-visible,
+.slimButton:focus-visible, .iconButton:focus-visible, .tabHeader:focus-visible {
+    box-shadow: 4px 4px 0 var(--b-yellow) !important;
+}
+a:focus-visible { background: var(--b-yellow) !important; color: #111111 !important; }
+#sideMenu a:focus-visible { box-shadow: 4px 4px 0 var(--b-yellow) !important; background: var(--b-hover) !important; color: var(--b-ink) !important; }
+
+/* Mono caps labels: one style, used everywhere a label appears */
+.DisplayMetric .DisplayMetricHeader > :nth-child(1),
+.InstanceList .ServerEntry .ServerEntryMetrics .ServerEntryMetric .MetricText h3,
+table th, #fileManagerInfo th, .keyMetric .title, .searchResultCategoryInfo h3,
+.SystemInfo, #bgtext {
+    font-family: var(--b-mono) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--b-ink-2) !important;
+}
+
+/* Square, chunky scrollbars */
+* { scrollbar-width: auto; scrollbar-color: var(--b-ink) var(--b-page); }
+::-webkit-scrollbar { width: 14px; height: 14px; }
+::-webkit-scrollbar-track { background: var(--b-page); border-left: 3px solid var(--b-line); }
+::-webkit-scrollbar-thumb { background: var(--b-yellow); border: 3px solid var(--b-line); }
+
+/* ==========================================================================
+   App chrome
+   ========================================================================== */
+#sideMenuContainer, #barTop, .sideItemList { background: var(--b-chrome) !important; }
+#sideMenuContainer { border-right: 3px solid var(--b-line) !important; }
+#barTop { border-bottom: 3px solid var(--b-line) !important; box-shadow: none; }
+#userInfo { background: transparent !important; border-bottom: 3px solid var(--b-line); }
+#userInfo, #userInfo * { color: var(--b-ink) !important; text-shadow: none !important; }
+.subMenuWell { background: transparent !important; }
+#sideMenu .heroImage { border-bottom: 3px solid var(--b-line); }
+
+/* Logo: a small brick beside the main-menu title, and on the login screen.
+   (The sidebar hero area is AMP's per-instance artwork, so it is left alone.) */
+#loginLogo img { content: var(--b-logo); }
+#loginLogo {
+    background-image: var(--b-logo);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+#sideMenu .menuTitle, #sideMenuContainer .menuTitle {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px !important;
+    letter-spacing: .08em !important;
+}
+#sideMenu .menuTitle::before, #sideMenuContainer .menuTitle::before {
+    content: '';
+    flex: 0 0 auto;
+    width: 38px;
+    height: 27px;
+    background: var(--b-logo) center / contain no-repeat;
+}
+.subMenuWell .menuTitle::before { display: none; }
+
+.menuTitle { color: var(--b-ink); }
+
+#sideMenu a {
+    color: var(--b-ink) !important;
+    font-weight: 700;
+    border: 3px solid transparent;
+    border-radius: 0;
+    transition: transform .08s ease, box-shadow .08s ease, background-color .08s ease;
+}
+#sideMenu a:hover { background: var(--b-hover) !important; border-color: var(--b-line); }
+#sideMenu a.selected {
+    background: var(--b-yellow) !important;
+    color: #111111 !important;
+    border-color: var(--b-line);
+    box-shadow: 4px 4px 0 var(--b-shadow);
+}
+#sideMenu a.hasNotice { background: transparent !important; }
+#sideMenu a.hasNotice .subtitle, #sideMenu a.info .subtitle { color: var(--b-ink-2) !important; font-size: 11px; }
+#sideMenu a.hasNotice::after {
+    content: '!';
+    display: inline-grid;
+    place-items: center;
+    width: 18px; height: 18px;
+    margin-left: auto;
+    font-family: var(--b-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: #111111;
+    background: var(--b-orange);
+    border: 2px solid #111111;
+}
+
+#barTop #tabInfo h2 { font-family: var(--b-display); text-transform: uppercase; color: var(--b-ink); }
+#barTop #tabInfo h4 { color: var(--b-ink-2); font-weight: 600; }
+
+.sideItemData > p, .sideItemData .description, .permNodeDescription,
+.settingDescription, .scheduleTriggerDescription, .subtitle, .fileEntrySubtitle {
+    color: var(--b-ink-2) !important;
+}
+
+/* Tabs: a row of outlined chips, active one yellow & raised */
+.tabHeaderContainer { background: transparent !important; border-bottom: 3px solid var(--b-line); }
+.tabHeaderContainer .tabHeader {
+    color: var(--b-ink) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    background: var(--b-surface) !important;
+    border: 3px solid var(--b-line) !important;
+    border-bottom: none !important;
+    border-radius: 0 !important;
+    margin-right: 6px;
+}
+.tabHeaderContainer .tabHeader:hover { background: var(--b-hover) !important; }
+.tabHeaderContainer .tabHeader.active {
+    background: var(--b-yellow) !important;
+    color: #111111 !important;
+    box-shadow: 4px -4px 0 var(--b-shadow);
+}
+
+/* ==========================================================================
+   Form controls
+   ========================================================================== */
+input[type=text], input[type=password], input[type=url], input[type=number],
+input[type=email], input[type=search], select, textarea, .popupTrigger {
+    background: var(--b-field) !important;
+    color: var(--b-ink) !important;
+    font-family: var(--b-font);
+    font-weight: 600;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: inset 3px 3px 0 var(--b-inset) !important;
+    outline: none;
+}
+input[type=text]:focus, input[type=password]:focus, input[type=url]:focus, input[type=number]:focus,
+input[type=email]:focus, input[type=search]:focus, select:focus, textarea:focus, .popupTrigger:focus {
+    border-color: var(--b-line) !important;
+    box-shadow: 4px 4px 0 var(--b-yellow) !important;
+}
+input:focus-visible, textarea:focus-visible, select:focus-visible { outline: none !important; }
+input::placeholder, textarea::placeholder { color: var(--b-ink-3) !important; opacity: 1 !important; font-weight: 500; }
+select option { background: var(--b-surface); color: var(--b-ink); }
+#barTop #topSearchBox input.searchBox { background: var(--b-field) !important; }
+#topSearchBox { background: transparent !important; border: none !important; box-shadow: none !important; }
+#topSearchBox .mat-icon, #barTop #topSearchBox .icon, #topSearchBox button {
+    color: #111111 !important;
+    background: var(--b-yellow) !important;
+    border: 3px solid var(--b-line) !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Switches: square track, square knob */
+label.checkbox { cursor: pointer; }
+label.checkbox span {
+    position: relative;
+    display: inline-block !important;
+    width: 46px !important;
+    height: 26px !important;
+    vertical-align: middle !important;
+    background: var(--b-field) !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 3px 3px 0 var(--b-shadow) !important;
+}
+label.checkbox span::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 2px !important;
+    left: 2px !important;
+    width: 16px !important;
+    height: 16px !important;
+    background: var(--b-ink) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    transition: left .1s steps(2) !important;
+}
+label.checkbox input[type=checkbox]:checked + span { background: var(--b-green) !important; }
+label.checkbox input[type=checkbox]:checked + span::after { left: 22px !important; background: #111111 !important; }
+label.checkbox input[type=checkbox]:indeterminate + span,
+label.checkbox input[type=checkbox][indeterminate] + span { background: var(--b-yellow) !important; }
+label.checkbox input[type=checkbox]:indeterminate + span::after,
+label.checkbox input[type=checkbox][indeterminate] + span::after { left: 12px !important; background: #111111 !important; }
+label.checkbox input[type=checkbox].redOff:not(:checked):not([indeterminate]) + span { background: var(--b-red) !important; }
+label.checkbox input[type=checkbox]:focus-visible + span { box-shadow: 4px 4px 0 var(--b-yellow) !important; }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+button, input[type=button], input[type=submit], .button {
+    font-family: var(--b-font) !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--b-ink) !important;
+    background: var(--b-surface) !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 4px 4px 0 var(--b-shadow) !important;
+    transition: transform .08s ease, box-shadow .08s ease !important;
+    filter: none !important;
+}
+button:hover, input[type=button]:hover, input[type=submit]:hover, .button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--b-shadow) !important;
+}
+button:active, input[type=button]:active, input[type=submit]:active, .button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 var(--b-shadow) !important;
+}
+button.disabled, .button.disabled, button:disabled {
+    background: repeating-linear-gradient(-45deg, var(--b-surface) 0 6px, var(--b-hover) 6px 12px) !important;
+    color: var(--b-ink-3) !important;
+    box-shadow: none !important;
+    transform: none !important;
+    cursor: not-allowed;
+}
+
+/* Colour classes: flat bright fills, ink text, same in both modes */
+.bgGreen  { background: var(--b-green)  !important; color: #111111 !important; border-color: var(--b-line) !important; }
+.bgRed    { background: var(--b-red)    !important; color: #111111 !important; border-color: var(--b-line) !important; }
+.bgAmber  { background: var(--b-orange) !important; color: #111111 !important; border-color: var(--b-line) !important; }
+.bgBlue, .bgInfo { background: var(--b-surface) !important; color: var(--b-ink) !important; border-color: var(--b-line) !important; }
+.bgPurple { background: var(--b-surface) !important; color: var(--b-ink) !important; border-color: var(--b-line) !important; }
+.bgPink   { background: var(--b-surface) !important; color: var(--b-ink) !important; border-color: var(--b-line) !important; }
+.bgGray   { background: var(--b-muted-fill) !important; color: #111111 !important; border-color: var(--b-line) !important; }
+.bgGreen *, .bgRed *, .bgAmber *, .bgGray * { color: #111111 !important; }
+.bgBlue *, .bgInfo *, .bgPurple *, .bgPink * { color: var(--b-ink) !important; }
+.bgBlue:hover, .bgInfo:hover, .bgPurple:hover, .bgPink:hover { background: var(--b-yellow) !important; color: #111111 !important; }
+.bgBlue:hover *, .bgInfo:hover *, .bgPurple:hover *, .bgPink:hover * { color: #111111 !important; }
+
+.iconButton { border-radius: 0 !important; }
+.iconButton.toggled { background: var(--b-yellow) !important; color: #111111 !important; }
+
+/* Primary actions */
+#loginButton, button#loginButton, .button#loginButton {
+    background: var(--b-yellow) !important;
+    color: #111111 !important;
+}
+
+/* ==========================================================================
+   Containers (one material for every panel)
+   ========================================================================== */
+.ServerGroup,
+#statusActions > div,
+.DisplayMetric,
+.settingsGroup .groupBody .settingContainer,
+#fileManagerList, #fileManagerInfo,
+.scheduleTriggerInfo, .datastoreItem, .backupListing, .StoreCard,
+.analyticsSection, .keyMetric,
+.bodyTab > table, #consoleArea {
+    background: var(--b-surface) !important;
+    background-image: none !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 6px 6px 0 var(--b-shadow) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* Panel title strips: ink bar for groups, yellow for headers inside cards */
+.ServerGroupHeader,
+.scheduleTriggerDescription, .datastoreItem h3, .StoreCard h2,
+.bodyTab > table > thead, table thead {
+    background: var(--b-yellow) !important;
+    color: #111111 !important;
+    border-bottom: 3px solid var(--b-line) !important;
+    margin: 0 !important;
+}
+.ServerGroupHeader *, .ServerGroupName > span, .datastoreItem h3, .StoreCard h2 { color: #111111 !important; }
+.ServerGroupHeader .SystemInfo { color: #111111 !important; }
+.ServerGroupActions { background: var(--b-surface-2) !important; border-top: 3px solid var(--b-line); }
+.ServerGroup.Offline .ServerGroupHeader { background: var(--b-red) !important; }
+
+/* ==========================================================================
+   Instances
+   ========================================================================== */
+.InstanceList .ServerEntry {
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 5px 5px 0 var(--b-shadow) !important;
+    outline: none !important;
+    transition: transform .08s ease, box-shadow .08s ease;
+}
+.InstanceList .ServerEntry:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--b-shadow) !important; }
+.InstanceList .ServerEntry:active { transform: translate(5px, 5px); box-shadow: none !important; }
+.ServerEntryTop { background: rgba(17, 17, 17, .72) !important; }
+.ServerEntryMetrics { background: #111111 !important; border-top: 3px solid var(--b-line); }
+.ServerEntryTop *, .ServerEntryMetrics * { color: #ffffff; }
+.InstanceList .ServerEntry .ServerEntryMetrics .ServerEntryMetric { background: none !important; }
+.InstanceList .ServerEntry .ServerEntryMetrics .ServerEntryMetric .MetricText h3 { color: #cfcfcf !important; }
+.InstanceList .ServerEntry .ServerEntryMetrics .ServerEntryMetric .MetricText { font-family: var(--b-mono); font-weight: 700; }
+.InstanceList .ServerEntry .ServerEntryInfo h2, .InstanceList .ServerEntry .ServerEntryInfo h4,
+.ServerEntryHeader, .ServerEntry h3 { text-shadow: none !important; font-weight: 800; }
+h5[data-bind*="text: endpoint"] { font-family: var(--b-mono); color: #e6e6e6 !important; }
+/* AMP stacks two copies of the game art: a blurred backdrop (.Blur) and the sharp image (.Main).
+   Never remove the backdrop's blur, or the art looks doubled. */
+.InstanceList .ServerEntry .ServerEntryImage.Blur { filter: blur(16px) !important; }
+.InstanceList .ServerEntry.statusOffline .ServerEntryImage.Blur { filter: blur(16px) grayscale(1) !important; }
+.InstanceList .ServerEntry.statusOffline .ServerEntryImage.Main { filter: grayscale(1) !important; }
+
+.InstanceList .ServerEntry.NewServerEntry {
+    background: var(--b-surface) !important;
+    border: 3px dashed var(--b-line) !important;
+    box-shadow: none !important;
+}
+.InstanceList .ServerEntry.NewServerEntry:hover { background: var(--b-yellow) !important; transform: none; }
+.InstanceList .ServerEntry.NewServerEntry, .InstanceList .ServerEntry.NewServerEntry * { color: var(--b-ink) !important; text-shadow: none !important; }
+.InstanceList .ServerEntry.NewServerEntry:hover * { color: #111111 !important; }
+.InstanceList .ServerEntry.NewServerEntry .ServerEntryHeader,
+.InstanceList .ServerEntry.NewServerEntry .ServerEntryHeader > * { background: transparent !important; box-shadow: none !important; }
+.InstanceList .ServerEntry.NewServerEntry h4 { font-family: var(--b-font); font-weight: 800 !important; text-transform: uppercase; letter-spacing: .06em; }
+
+/* Status chips: square stickers with an ink edge */
+.ServerEntryStatus, .AppStatus {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 2px solid #111111 !important;
+    border-radius: 0 !important;
+    box-shadow: 2px 2px 0 #111111 !important;
+    font-family: var(--b-mono);
+    font-size: 11px !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+.ServerEntryStatus .mat-icon, .AppStatus .mat-icon { font-size: 14px !important; }
+.ServerEntryStatus.bgGreen .mat-icon, .AppStatus.bgGreen .mat-icon { animation: bz-blink 1.4s steps(1) infinite; }
+
+/* ==========================================================================
+   Status page
+   ========================================================================== */
+#statusActions > div { padding: 14px 16px !important; }
+#statusActions > div > h2, .metricsHeader h2 { color: var(--b-ink); font-size: 15px !important; margin: 0 0 12px !important; }
+.DisplayMetric { padding: 14px 16px !important; }
+#AMP_Core_MetricsDisplay { gap: 16px; }
+.DisplayMetric .DisplayMetricHeader { background: none !important; }
+.DisplayMetric .DisplayMetricHeader > :nth-child(2) {
+    font-family: var(--b-display) !important;
+    font-size: 26px !important;
+    line-height: 1.15 !important;
+    color: var(--b-ink) !important;
+}
+.DisplayMetric .circleChart, .DisplayMetric .circleProgress { opacity: .9; }
+.listenPort {
+    background: var(--b-surface-2) !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    font-weight: 700;
+}
+span[data-bind*="text: Port"] { font-family: var(--b-mono); font-weight: 700; }
+span[data-bind*="text: ProtocolName"] {
+    display: inline-block !important;
+    align-self: center !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+    font-family: var(--b-mono); font-size: 10px; font-weight: 700; text-transform: uppercase;
+    padding: 1px 6px; background: var(--b-ink); color: var(--b-page);
+}
+.well, .well.info {
+    background: var(--b-sky) !important;
+    color: #111111 !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 4px 4px 0 var(--b-shadow);
+}
+.well * { color: #111111 !important; }
+.itemTag {
+    background: var(--b-surface) !important;
+    border: 2px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    color: var(--b-ink) !important;
+    font-family: var(--b-mono); font-size: 11px; font-weight: 700; text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Console — always a black terminal, both modes
+   ========================================================================== */
+#consoleArea {
+    background: #0e0e0e !important;
+    color: #f2ede0 !important;
+    font-family: var(--b-mono) !important;
+    font-size: 12.5px;
+    line-height: 1.6;
+}
+.consoleEntry, div.consoleEntry,
+#consoleArea .consoleEntry:nth-child(odd),
+div.consoleEntry:nth-child(odd), div.consoleEntry:nth-child(even) { background: none !important; color: #f2ede0; }
+div.consoleEntry:hover, .consoleEntry:hover { background: #2a2a2a !important; }
+.consoleEntry .consoleTimestamp { color: #8c8c8c; }
+.consoleEntry .consoleName { color: var(--b-yellow); font-weight: 700; }
+#consoleLineEntry { font-family: var(--b-mono) !important; caret-color: var(--b-yellow); }
+
+/* ==========================================================================
+   Settings
+   ========================================================================== */
+.settingLabel { color: var(--b-ink) !important; font-weight: 800; }
+.settingWarning, .containerWarning {
+    background: var(--b-orange) !important;
+    color: #111111 !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+}
+
+/* ==========================================================================
+   File manager, schedule, tables, analytics, store
+   ========================================================================== */
+.fileManagerEntry { border-bottom: 2px solid var(--b-line) !important; }
+.fileManagerEntry:hover { background: var(--b-hover) !important; }
+.fileManagerEntry.selected { background: var(--b-yellow) !important; }
+.fileManagerEntry.selected * { color: #111111 !important; }
+.fileEntryTitle { color: var(--b-ink); font-weight: 700; }
+.fmPathSegment { color: var(--b-ink); font-weight: 700; }
+.fmPathSegment:hover { background: var(--b-yellow); color: #111111; }
+#fileManagerInfo td { color: var(--b-ink); }
+.ace-ambiance, .ace-ambiance .ace_scroller { background: #0e0e0e !important; box-shadow: none !important; }
+.ace-ambiance .ace_gutter { background: #1a1a1a !important; color: #8c8c8c !important; border-right: 3px solid #f2ede0 !important; text-shadow: none !important; }
+
+.scheduleTriggerHeaderItem .scheduleHeader { color: var(--b-ink); font-weight: 800; }
+.scheduleTriggerTask { border-bottom: 2px solid var(--b-line); }
+
+.bodyTab > table, #diagTable, #currentSessionsTable, #auditLogTable { border-collapse: collapse !important; }
+table td { border-bottom: 2px solid var(--b-line); color: var(--b-ink); }
+tbody tr:nth-child(even), table tbody tr:nth-child(odd) { background: transparent !important; }
+table tbody tr:hover { background: var(--b-hover) !important; }
+
+.keyMetric .value { font-family: var(--b-display); }
+.headerControls > div { border: 2px solid transparent; }
+.headerControls > div:hover { border-color: var(--b-line); }
+.headerControls > div.active { background: var(--b-yellow); color: #111111; border-color: var(--b-line); }
+
+/* ==========================================================================
+   Search, menus, modals, notifications
+   ========================================================================== */
+#searchResults, .searchResults, .contextMenu.contextMenu, .wizardTab .wizardContents, .modalpanel {
+    background: var(--b-surface) !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 8px 8px 0 var(--b-shadow) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+.contextMenu.contextMenu .flexButtonGroup { background: transparent !important; }
+.contextMenu .flexButtonGroup .buttonListSeparator { border-color: var(--b-line) !important; border-width: 2px !important; }
+.searchResult:hover, #searchResults .searchResult:hover { background: var(--b-yellow) !important; color: #111111 !important; }
+.wizardTab .wizardContents h2, .modalpanel #modaltitle {
+    background: var(--b-yellow) !important;
+    color: #111111 !important;
+    border-bottom: 3px solid var(--b-line) !important;
+}
+#modalsubtitle { color: var(--b-ink-2); }
+
+#notificationContainer .notification {
+    background: var(--b-surface) !important;
+    color: var(--b-ink) !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 6px 6px 0 var(--b-shadow) !important;
+}
+.notificationProgessContainer { background: var(--b-field) !important; border: 2px solid var(--b-line); }
+
+/* ==========================================================================
+   Login
+   ========================================================================== */
+#loginContainer {
+    background: var(--b-surface) !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 10px 10px 0 var(--b-shadow) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+#loginContainer * { text-shadow: none !important; }
+
+/* ==========================================================================
+   Live fixes — found by testing against a real AMP 2.8 panel
+   ========================================================================== */
+
+/* Login: AMP's #loginLogo holds the logo <img>, the welcome heading and the
+   module info, so the brick replaces only the image, at a fixed size. */
+#loginLogo { background-image: none !important; }
+#loginLogo img { content: var(--b-logo); width: 150px !important; height: auto !important; max-width: 150px !important; display: block; margin: 0 0 18px; }
+#loginWelcome { font-size: 26px !important; margin: 0 0 6px !important; line-height: 1.1; }
+#loginModuleInfo h4, #loginModuleInfo h6 { color: var(--b-ink-2) !important; font-weight: 600; }
+#loginModuleInfo h6 { font-family: var(--b-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+#loginForm label:not(.checkbox) { font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: .06em; }
+#loginForm input { background: var(--b-field) !important; }
+#secureLoginButton { background: var(--b-surface) !important; color: var(--b-ink) !important; }
+#secureLoginButton * { color: var(--b-ink) !important; }
+
+/* Instance cards: the "Application sleeping/stopped" notice sits over the art */
+.InstanceList .ServerEntry .ServerEntryInfo .Notice { background: rgba(17, 17, 17, .86) !important; border-top: 3px solid #111111 !important; padding: 8px 12px !important; }
+.InstanceList .ServerEntry .ServerEntryInfo .Notice, .InstanceList .ServerEntry .ServerEntryInfo .Notice * { color: #ffffff !important; text-shadow: none !important; }
+.InstanceList .ServerEntry .ServerEntryInfo .Notice h2 { font-family: var(--b-display); font-size: 14px !important; text-transform: uppercase; margin: 0 0 2px !important; }
+.InstanceList .ServerEntry .ServerEntryInfo .Notice h4 { font-size: 12px !important; font-weight: 500 !important; color: #dddddd !important; }
+
+/* Metric rings */
+.DisplayMetric .circleChart circle { stroke: var(--b-hover) !important; }
+.DisplayMetric .circleChart circle.value { stroke: var(--b-ink) !important; }
+
+/* AMP adds a soft text-shadow to buttons */
+button, input[type=button], input[type=submit], .button { text-shadow: none !important; }
+
+/* Tabs: AMP draws each tab's icon as a giant faded watermark (scale: 4) */
+.tabHeaderContainer .tabHeader { display: inline-flex !important; align-items: center; gap: 8px; white-space: nowrap; }
+.tabHeaderContainer .tabHeader .mat-icon { position: static !important; scale: 1 !important; font-size: 18px !important; line-height: 1 !important; opacity: 1 !important; transform: none !important; filter: none !important; margin: 0 !important; width: auto !important; height: auto !important; color: inherit !important; text-shadow: none !important; }
+
+/* Console scrollbar */
+#consoleArea { scrollbar-color: var(--b-yellow) #0e0e0e; }
+#consoleArea::-webkit-scrollbar-track { background: #0e0e0e; border-left: 3px solid #0e0e0e; }
+#consoleArea::-webkit-scrollbar-thumb { background: var(--b-yellow); border: 3px solid #0e0e0e; }
+
+/* Switch knob: drop AMP's soft drop shadow */
+label.checkbox span::after { box-shadow: none !important; }
+
+/* User / role lists */
+.sideItemList { border-right: 3px solid var(--b-line) !important; }
+.itemList .item { border-bottom: 2px solid var(--b-line); color: var(--b-ink) !important; }
+.itemList .item:hover { background: var(--b-hover) !important; }
+.itemList .item.selected { background: var(--b-yellow) !important; color: #111111 !important; box-shadow: inset 4px 0 0 #111111; }
+.itemList .item.selected * { color: #111111 !important; }
+.itemList .item .desc { color: var(--b-ink-2) !important; font-size: 11px; }
+.itemList .item img { border: 2px solid var(--b-line); border-radius: 0 !important; }
+.slideIcon { border-radius: 0 !important; }
+
+/* Option tiles (checkButtons / radioButtons) */
+label.checkButtons input[type=checkbox] ~ span:last-of-type,
+label.radioButtons input[type=radio] ~ span { background: var(--b-surface-2) !important; border: 3px solid var(--b-line) !important; border-radius: 0 !important; color: var(--b-ink) !important; outline: none !important; }
+label.checkButtons input[type=checkbox] ~ span:last-of-type:hover,
+label.radioButtons input[type=radio] ~ span:hover { background: var(--b-hover) !important; }
+label.checkButtons input[type=checkbox]:checked ~ span:last-of-type,
+label.radioButtons input[type=radio]:checked ~ span { background: var(--b-yellow) !important; color: #111111 !important; box-shadow: 4px 4px 0 var(--b-shadow); }
+
+/* Every translucent, rounded AMP panel becomes a flat outlined block */
+.treeContainer, .treeContents { background: var(--b-surface-2) !important; border: 3px solid var(--b-line) !important; border-radius: 0 !important; }
+.treeEntry { border-bottom: 2px solid var(--b-line); }
+.treeEntry:last-child { border-bottom: none; }
+.treeName { color: var(--b-ink) !important; font-weight: 700; }
+.infoWell, .bodyTab .splitViewInfo, .permissionDescriptions div, #modalAdvancedText, .timeSegment, .lift {
+    background: var(--b-surface-2) !important; border: 3px solid var(--b-line) !important; border-radius: 0 !important; color: var(--b-ink) !important; box-shadow: none !important;
+}
+.well.warning, p.inlineWarning { background: var(--b-orange) !important; color: #111111 !important; border: 3px solid var(--b-line) !important; border-radius: 0 !important; }
+.well.good { background: var(--b-green) !important; color: #111111 !important; border: 3px solid var(--b-line) !important; border-radius: 0 !important; }
+.well.warning *, .well.good *, p.inlineWarning * { color: #111111 !important; }
+.subMenu { background: var(--b-chrome) !important; border: 3px solid var(--b-line) !important; border-radius: 0 !important; }
+#sideMenuContainer .subMenuWell.appear { border: 3px solid var(--b-line) !important; border-radius: 0 !important; box-shadow: 6px 6px 0 var(--b-shadow) !important; }
+#consoleUsers { background: var(--b-surface) !important; }
+#consoleUsers .consoleUserEntry { background: none !important; border-bottom: 2px solid var(--b-line); color: var(--b-ink); }
+.modalbg { background: rgba(17, 17, 17, .55) !important; }
+
+/* Datastores */
+.datastoreItem h3, .StoreCard h2 { font-family: var(--b-display) !important; font-weight: 400 !important; text-transform: uppercase; font-size: 15px !important; letter-spacing: .02em; }
+.datastoreItem h3 .mat-icon, .datastoreItem h3 * { color: #111111 !important; text-shadow: none !important; }
+.datastoreItem .itemImage, .newDatastoreItem .itemImage { color: #111111 !important; text-shadow: none !important; }
+.datastoreItem table td, .datastoreItem td { border-bottom: 2px solid var(--b-line); }
+.circleChart circle { stroke: var(--b-hover) !important; }
+.circleChart circle.value { stroke: var(--b-ink) !important; }
+
+/* AMP's option-tile glyphs are white PNGs: darken them on light backgrounds */
+label.radioButtons span img, label.checkButtons span img, .datastoreItem img, .newDatastoreItem img { filter: var(--b-glyph); opacity: .55; }
+
+/* Group header actions: neutral buttons are always white chips on the yellow strip */
+.ServerGroupHeader .bgBlue, .ServerGroupHeader .bgInfo, .ServerGroupHeader .bgPurple, .ServerGroupHeader .bgPink,
+.ServerGroupHeader button:not([class*=bg]) { background: #ffffff !important; }
+.ServerGroupHeader .bgBlue, .ServerGroupHeader .bgInfo, .ServerGroupHeader .bgPurple, .ServerGroupHeader .bgPink,
+.ServerGroupHeader .bgBlue *, .ServerGroupHeader .bgInfo *, .ServerGroupHeader .bgPurple *, .ServerGroupHeader .bgPink * { color: #111111 !important; }
+.ServerGroupHeader button { border-color: #111111 !important; box-shadow: 3px 3px 0 #111111 !important; }
+
+/* Instances page: room to breathe, joined toolbars instead of gappy buttons */
+.InstanceList { padding: 18px !important; gap: 22px !important; }
+.ServerGroupHeader { padding: 12px 16px !important; }
+.ServerGroupName > span { padding: 0 0 10px !important; display: block; }
+.ServerGroupActions .slimButton, .ServerGroupHeader .slimButton { min-height: 36px !important; padding: 4px 14px !important; font-size: 12px !important; gap: 6px; display: inline-flex !important; align-items: center; }
+.slimButton, .slimButton .label { font-family: var(--b-font) !important; font-weight: 800 !important; text-transform: uppercase; letter-spacing: .04em; }
+.slimButton .mat-icon { font-size: 18px !important; }
+
+/* Instance card actions: one solid toolbar, shared borders, one shadow */
+.InstanceList .ServerEntry .ServerEntryActions { gap: 0 !important; background: #111111; border: 3px solid #111111; box-shadow: 4px 4px 0 #111111; }
+.InstanceList .ServerEntry .ServerEntryActions button,
+.InstanceList .ServerEntry .ServerEntryActions .iconButton { box-shadow: none !important; border: none !important; border-right: 3px solid #111111 !important; margin: 0 !important; }
+.InstanceList .ServerEntry .ServerEntryActions button:last-child { border-right: none !important; }
+.InstanceList .ServerEntry .ServerEntryActions button:not(.bgGreen):not(.bgRed):not(.bgAmber):hover { background: var(--b-yellow) !important; color: #111111 !important; }
+.InstanceList .ServerEntry .ServerEntryActions button:hover * { color: #111111 !important; }
+.InstanceList .ServerEntry .ServerEntryActions button:active { background: #e6c000 !important; }
+
+/* Segmented icon buttons (view toggles): first/last pairs join into one block */
+.instanceViewToolbar { gap: 0 !important; }
+.instanceViewToolbar .iconButton { margin-left: 0; margin-right: 0; }
+.iconButton.first, .iconButton.middle { margin-right: 0 !important; border-right: none !important; }
+.iconButton.first + .iconButton, .iconButton.middle + .iconButton { margin-left: 0 !important; position: relative; z-index: 1; }
+.iconButton.gapAfter { margin-right: 14px !important; }
+
+/* Group header actions: one joined toolbar. The outline and shadow belong to the
+   whole bar, so no single button (e.g. Create Instance) looks bigger than the rest. */
+.ServerGroupActions { display: inline-flex !important; width: fit-content !important; max-width: 100%; flex-wrap: wrap; gap: 0 !important; padding: 0 !important; background: #111111 !important; border: 3px solid #111111 !important; box-shadow: 4px 4px 0 #111111 !important; }
+.ServerGroupActions .slimButton, .ServerGroupActions .slimButton:last-of-type { margin: 0 !important; border: none !important; border-right: 3px solid #111111 !important; box-shadow: none !important; }
+.ServerGroupActions .slimButton:last-of-type { border-right: none !important; }
+.ServerGroupActions .slimButton:not(.bgGreen):not(.bgRed):not(.bgAmber):hover { background: var(--b-yellow) !important; }
+
+/* Top search: field + yellow button with a drawn magnifier
+   (AMP's own icon is a white PNG, invisible on yellow) */
+#barTop #topSearchBox { display: inline-flex !important; align-items: stretch; flex-direction: row-reverse; }
+#barTop #topSearchBox input.searchBox { height: 40px !important; box-sizing: border-box !important; border-right: none !important; margin: 0 !important; }
+#barTop #topSearchBox .icon {
+    float: none !important; width: 40px !important; height: 40px !important; box-sizing: border-box !important; margin: 0 !important; cursor: pointer;
+    background: var(--b-yellow) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='10' cy='10' r='6.5' fill='none' stroke='%23111111' stroke-width='3'/%3E%3Cpath d='M15 15l6 6' stroke='%23111111' stroke-width='3.5' stroke-linecap='square'/%3E%3C/svg%3E") center / 20px 20px no-repeat !important;
+    border: 3px solid var(--b-line) !important;
+}
+#barTop #topSearchBox:focus-within .icon { border-color: var(--b-line) !important; }
+
+/* ==========================================================================
+   Store (Beta)
+   ========================================================================== */
+/* Landing header: AMP writes the subtitle in inline 50% white */
+.storeHeader, .storeHeader * { color: var(--b-ink) !important; text-shadow: none !important; }
+.storeHeader > div:last-child > span:first-child { font-family: var(--b-display); text-transform: uppercase; }
+.storeHeader span[style] { color: var(--b-ink-2) !important; font-family: var(--b-mono); font-size: 12px !important; text-transform: uppercase; letter-spacing: .08em; }
+
+/* Store cards carry an inline brand gradient + white text; flatten to ink on white */
+.StoreCard { cursor: pointer; transition: transform .08s ease-out, box-shadow .08s ease-out !important; }
+.StoreCard:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--b-shadow) !important; }
+.StoreCard, .StoreCard * { color: var(--b-ink) !important; text-shadow: none !important; }
+.StoreCard h2 { color: #111111 !important; }
+.StoreCard p { padding: 0 14px; font-weight: 600; }
+.StoreCard .BrandImage { border: 3px solid var(--b-line); background: #111111; }
+
+/* Third-party warning */
+.storeWarning { background: var(--b-orange) !important; border: 3px solid var(--b-line) !important; border-radius: 0 !important; box-shadow: 6px 6px 0 var(--b-shadow) !important; }
+.storeWarning, .storeWarning * { color: #111111 !important; text-shadow: none !important; }
+.storeWarning h3 { font-family: var(--b-display); text-transform: uppercase; font-size: 15px; }
+
+/* Category tiles: the floating rounded icon tile becomes a black chip in the title strip */
+.CategoryCard { position: relative; }
+.CategoryCard .CategoryIcon { position: absolute !important; top: 0 !important; right: 0 !important; left: auto !important; bottom: auto !important; width: auto !important; height: auto !important; min-width: 0 !important; padding: 2px 8px !important; margin: 0 !important; background: #111111 !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; transform: none !important; filter: none !important; display: flex; align-items: center; z-index: 1; }
+.CategoryCard .CategoryIcon .StoreIcon, .CategoryCard .CategoryIcon .mat-icon { color: var(--b-yellow) !important; font-size: 18px !important; width: auto !important; height: auto !important; line-height: 1 !important; text-shadow: none !important; }
+.CategoryCard .CategoryIcon img { width: 18px !important; height: 18px !important; filter: invert(1) !important; }
+.CategoryCard h2 { padding-right: 44px !important; }
+.CategoryCard p { padding: 8px 12px !important; }
+
+/* Theme entries: preview becomes a full-width banner, title strip under it, text never runs under the image */
+.EntryCard { display: flex !important; flex-direction: column; overflow: hidden; height: auto !important; }
+.EntryCard .EntryIcon { position: static !important; order: -2; width: 100% !important; height: 120px !important; margin: 0 !important; border-bottom: 3px solid var(--b-line); background: #111111; border-radius: 0 !important; box-shadow: none !important; overflow: hidden; }
+.EntryCard .EntryIcon img { width: 100% !important; height: 100% !important; object-fit: cover; object-position: top left; border-radius: 0 !important; display: block; }
+.EntryCard .titleHeader { order: -1; background: var(--b-yellow) !important; color: #111111 !important; height: auto !important; min-height: 0 !important; padding: 8px 12px !important; border-bottom: 3px solid var(--b-line); font-family: var(--b-display); text-transform: uppercase; font-size: 14px !important; }
+.EntryCard .titleHeader * { color: #111111 !important; }
+.EntryCard .titleHeader .authorName { font-family: var(--b-mono); font-size: 11px; text-transform: none; font-weight: 700; }
+.EntryCard p { padding: 8px 12px 0 !important; margin: 0 !important; color: var(--b-ink) !important; font-weight: 500; flex: 1; }
+.EntryCard .StoreEntryInfo, .EntryCard .StoreEntryInfo * { color: var(--b-ink-2) !important; font-family: var(--b-mono); font-size: 11px; }
+.EntryCard .StoreRatingStars { color: #111111 !important; }
+
+/* Instance status page: cards size to their content (AMP forces the ports card to min-width: 45%) */
+#statusActions { align-items: stretch; }
+#statusActions > div { flex: 0 0 auto !important; width: auto !important; min-width: 0 !important; max-width: 100% !important; }
+
+/* Status cards: tidy rows instead of beige slabs */
+#statusActions .listenPort { display: grid !important; align-items: center; column-gap: 14px; width: auto !important; padding: 9px 2px !important; margin: 0 !important; background: transparent !important; border: none !important; border-bottom: 2px solid var(--b-line) !important; box-shadow: none !important; font-weight: 600; }
+#statusActions .listenPort:last-child { border-bottom: none !important; }
+#statusActions .listenPort:empty { display: none !important; }
+#statusActions .listenPort > span { padding: 0 !important; height: auto !important; }
+
+/* Network ports: status · name · port · protocol */
+#AMP_Core_Ports .listenPort { grid-template-columns: max-content max-content max-content max-content; }
+#AMP_Core_Ports .listenPort > span:nth-child(2) { font-weight: 700; font-size: 14px; }
+#AMP_Core_Ports .listenPort > span:nth-child(3) { margin-left: 12px; }
+#AMP_Core_Ports .listenPort > span:nth-child(3), span[data-bind*="text: PortDisplay"] { font-family: var(--b-mono); font-weight: 700; font-size: 14px; text-align: right; }
+#AMP_Core_Ports .listenPort > .AppStatus { padding: 3px 9px !important; font-size: 10px !important; box-shadow: none !important; border-width: 2px !important; }
+#AMP_Core_Ports .listenPort > .AppStatus .mat-icon { font-size: 13px !important; }
+/* Protocol: a quiet outlined tag instead of a black block */
+#statusActions span[data-bind*="text: ProtocolName"] { display: inline-block !important; justify-self: start; background: transparent !important; color: var(--b-ink-2) !important; border: 2px solid var(--b-ink-2) !important; padding: 1px 6px !important; font-family: var(--b-mono); font-size: 10px !important; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; line-height: 1.3 !important; min-width: 34px; text-align: center; }
+
+/* Connection info: label · value */
+#statusActions .listenPort:not(:has(> .AppStatus)) { grid-template-columns: max-content 1fr; }
+#statusActions .listenPort:not(:has(> .AppStatus)) > span:first-child { font-family: var(--b-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--b-ink-2); font-weight: 700; }
+#statusActions .listenPort:not(:has(> .AppStatus)) > span:last-child { font-family: var(--b-mono); font-weight: 700; }
+
+/* Actions: stacked full-width buttons, label left, icon right, so the card stays narrow */
+#AMP_Core_ServerStatus { display: flex !important; flex-direction: column; align-items: stretch; gap: 10px; }
+#AMP_Core_ServerStatus button { width: 100% !important; margin: 0 !important; min-height: 40px; display: inline-flex !important; align-items: center; justify-content: space-between; gap: 18px; padding: 0 14px !important; font-size: 14px !important; }
+#AMP_Core_ServerStatus button[style*="display: none"] { display: none !important; }
+#AMP_Core_ServerStatus .slideIcon > span, #AMP_Core_ServerStatus .slideIcon .mat-icon { position: static !important; transform: none !important; opacity: 1 !important; width: auto !important; max-width: none !important; margin: 0 !important; visibility: visible !important; }
+#AMP_Core_ServerStatus .slideIcon .mat-icon { font-size: 20px !important; }
+
+/* ==========================================================================
+   Motion — instances page buttons
+   Brutal, snappy motion: things pop up, slam down, and icons act out
+   what the button does. All of it switches off with reduced motion.
+   ========================================================================== */
+@keyframes bz-spin   { to { transform: rotate(360deg); } }
+@keyframes bz-nudge  { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
+@keyframes bz-thump  { 0%, 100% { transform: scale(1); } 40% { transform: scale(.72); } 70% { transform: scale(1.12); } }
+@keyframes bz-drop   { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(3px); } }
+@keyframes bz-wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-14deg); } 75% { transform: rotate(14deg); } }
+@keyframes bz-pop    { 0% { transform: scale(1); } 50% { transform: scale(1.22); } 100% { transform: scale(1); } }
+@keyframes bz-rise   { from { transform: translate(6px, 6px); box-shadow: 0 0 0 #111111; opacity: 0; } to { transform: none; opacity: 1; } }
+
+.ServerGroupActions .slimButton .mat-icon,
+.InstanceList .ServerEntry .ServerEntryActions button .mat-icon,
+.instanceViewToolbar .iconButton .mat-icon { display: inline-block; transition: transform .15s steps(3); }
+
+/* Group header toolbar: each button pops up out of the bar on hover, slams down on click */
+.ServerGroupActions .slimButton { position: relative; transition: transform .08s ease-out, box-shadow .08s ease-out, background-color .08s linear !important; }
+.ServerGroupActions .slimButton:hover { transform: translate(-3px, -3px) !important; box-shadow: 4px 4px 0 #111111 !important; z-index: 2; }
+.ServerGroupActions .slimButton:active { transform: translate(1px, 1px) !important; box-shadow: 0 0 0 #111111 !important; transition-duration: .03s !important; }
+
+/* Icons act out the action */
+.ServerGroupActions .slimButton[data-bind*="refresh"]:hover .mat-icon { animation: bz-spin .6s steps(8) infinite; }
+.ServerGroupActions .slimButton[data-bind*="startAll"]:hover .mat-icon,
+.ServerGroupActions .slimButton[data-bind*="manage"]:hover .mat-icon { animation: bz-nudge .4s steps(2) infinite; }
+.ServerGroupActions .slimButton[data-bind*="stopAll"]:hover .mat-icon { animation: bz-thump .5s ease-in-out infinite; }
+.ServerGroupActions .slimButton[data-bind*="updateAll"]:hover .mat-icon { animation: bz-drop .45s steps(2) infinite; }
+.ServerGroupActions .slimButton[data-bind*="createInstance"]:hover .mat-icon { transform: rotate(90deg); }
+.ServerGroupActions .slimButton[data-bind*="edit"]:hover .mat-icon { animation: bz-wiggle .35s steps(2) infinite; }
+
+/* Instance card toolbar: the hovered button rises out of the strip */
+.InstanceList .ServerEntry .ServerEntryActions button { position: relative; transition: transform .08s ease-out, box-shadow .08s ease-out, background-color .06s linear !important; }
+.InstanceList .ServerEntry .ServerEntryActions button:hover { transform: translate(-3px, -3px) !important; box-shadow: 3px 3px 0 #111111, 0 0 0 3px #111111 !important; z-index: 2; }
+.InstanceList .ServerEntry .ServerEntryActions button:active { transform: translate(0, 0) !important; box-shadow: none !important; transition-duration: .03s !important; }
+.InstanceList .ServerEntry .ServerEntryActions button[title="Stop Instance"]:hover .mat-icon,
+.InstanceList .ServerEntry .ServerEntryActions button[title="Delete Instance"]:hover .mat-icon { animation: bz-thump .5s ease-in-out infinite; }
+.InstanceList .ServerEntry .ServerEntryActions button[title="Start Instance"]:hover .mat-icon { animation: bz-nudge .4s steps(2) infinite; }
+.InstanceList .ServerEntry .ServerEntryActions button[title="Update Instance"]:hover .mat-icon { animation: bz-drop .45s steps(2) infinite; }
+.InstanceList .ServerEntry .ServerEntryActions button[title="Edit Settings"]:hover .mat-icon { animation: bz-wiggle .35s steps(2) infinite; }
+.InstanceList .ServerEntry .ServerEntryActions button[title="Share Instance"]:hover .mat-icon,
+.InstanceList .ServerEntry .ServerEntryActions button[title="Clone Instance"]:hover .mat-icon { animation: bz-pop .4s steps(3); }
+.InstanceList .ServerEntry .ServerEntryActions button[title="Browse Datastore"]:hover .mat-icon { transform: translateY(-2px) rotate(-8deg); }
+.InstanceList .ServerEntry .ServerEntryActions button[title="Manage in New Tab"]:hover .mat-icon { transform: translate(2px, -2px); }
+.InstanceList .ServerEntry .ServerEntryActions button[title="Manage Instance"]:hover .mat-icon { animation: bz-spin .9s steps(4) infinite; }
+
+/* View toggles */
+.instanceViewToolbar .iconButton { transition: transform .08s ease-out, box-shadow .08s ease-out !important; }
+.instanceViewToolbar .iconButton:hover { transform: translate(-2px, -2px); }
+.instanceViewToolbar .iconButton:active { transform: translate(2px, 2px); box-shadow: none !important; }
+.instanceViewToolbar .iconButton:hover .mat-icon { animation: bz-pop .3s steps(3); }
+
+/* Cards drop into place when the list loads */
+.InstanceList .ServerEntry { animation: bz-rise .22s steps(4) backwards; }
+.InstanceList .ServerEntry:nth-child(2) { animation-delay: .04s; }
+.InstanceList .ServerEntry:nth-child(3) { animation-delay: .08s; }
+.InstanceList .ServerEntry:nth-child(4) { animation-delay: .12s; }
+.InstanceList .ServerEntry:nth-child(n+5) { animation-delay: .16s; }
+.InstanceList .ServerEntry.NewServerEntry:hover .ServerEntryHeader + span,
+.InstanceList .ServerEntry.NewServerEntry:hover > span { display: inline-block; transform: rotate(90deg); transition: transform .15s steps(3); }
+
+/* ==========================================================================
+   Compact sidebar rail (AMP collapses the menu to icons at 1000px and below)
+   A flush 72px rail: brick at the top, square icon tiles, no scrollbar,
+   no rotated version text.
+   ========================================================================== */
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    #sideMenuContainer {
+        width: 72px !important;
+        margin: 0 !important;
+        height: 100% !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+    #sideMenuContainer.childOpen { width: 275px !important; box-sizing: border-box !important; box-shadow: 6px 0 0 var(--b-shadow) !important; }
+    #sideMenu {
+        width: 72px !important;
+        padding: 0 0 12px !important;
+        align-items: center;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    #sideMenu::-webkit-scrollbar { display: none; width: 0; }
+    #bgtext { display: none !important; }
+
+    /* Brick only, no "Main Menu" text */
+    #sideMenu > .menuTitle {
+        display: flex !important;
+        justify-content: center;
+        width: 100% !important;
+        height: 51px !important;
+        min-height: 51px;
+        margin: 0 0 10px !important;
+        padding: 0 !important;
+        font-size: 0 !important;
+        line-height: 0 !important;
+        color: transparent !important;
+        border-bottom: 3px solid var(--b-line);
+        box-sizing: border-box;
+    }
+    #sideMenu > .menuTitle::before { width: 40px; height: 30px; }
+
+    #sideMenuPresenter {
+        width: 100% !important;
+        align-items: center;
+        gap: 8px;
+    }
+    #sideMenuPresenter > .multiMenuContainer { width: auto !important; }
+    #sideMenu a:not(.subMenuWell a) {
+        position: relative;
+        display: grid !important;
+        place-items: center;
+        width: 48px !important;
+        height: 48px !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        box-sizing: border-box;
+    }
+    #sideMenu a.padBottom { margin-bottom: 8px !important; }
+    #sideMenu a:not(.subMenuWell a) > div,
+    #sideMenu a:not(.subMenuWell a) > span:not(.mat-icon),
+    #sideMenu a:not(.subMenuWell a) > .mat-icon:not(.warn) ~ .mat-icon:not(.warn) { display: none !important; }
+    #sideMenu a:not(.subMenuWell a) > .mat-icon:not(.warn),
+    #sideMenu a:not(.subMenuWell a) > img:not(.warn) {
+        grid-area: 1 / 1;
+        width: auto !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 26px !important;
+        line-height: 1 !important;
+    }
+    #sideMenu a:not(.subMenuWell a) > .mat-icon.warn,
+    #sideMenu a:not(.subMenuWell a) > img.warn {
+        position: absolute !important;
+        top: -6px; right: -6px;
+        width: 18px !important; height: 18px !important;
+        margin: 0 !important; padding: 0 !important;
+        display: grid; place-items: center;
+        font-size: 13px !important;
+        line-height: 1 !important;
+        color: #111111 !important;
+        background: var(--b-orange);
+        border: 2px solid #111111;
+    }
+    #sideMenu a.hasNotice::after { display: none !important; }
+    #sideMenu a.selected { box-shadow: 3px 3px 0 var(--b-shadow); }
+
+    /* Sub-menu flyout sits flush against the rail */
+    .subMenuWell { margin-left: 72px !important; left: 0 !important; }
+    .subMenuWell.appear { left: 0 !important; border: none !important; border-left: 3px solid var(--b-line) !important; box-shadow: none !important; }
+
+    .bodyTab:not(.wizardTab) { left: 72px !important; padding: 12px !important; }
+    #barTop #tabInfo { margin-left: 84px !important; }
+}
+
+/* Phone drawer: AMP's hamburger is a white PNG, so ink it to match the theme */
+#navToggle { filter: var(--b-glyph) !important; }
+.multiMenuContainer > a > .mat-icon:last-child:not(:first-child) { font-size: 18px !important; margin-left: auto; }
+
+/* Centre everything in the rail: the menu spans the visible width (inside
+   the border), the brick has no gap from the hidden title text, and the
+   avatar isn't floated left */
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    #sideMenu { width: 100% !important; }
+    #sideMenu > .menuTitle { gap: 0 !important; }
+    #userInfo:not(.opened) .icon { float: none !important; display: block !important; margin: 0 auto !important; }
+}
+
+/* ==========================================================================
+   File manager
+   Breadcrumb chips, a joined toolbar, an inset list panel with icon tiles,
+   and a flat info panel. Folder/virtual/archive colours become tile fills.
+   ========================================================================== */
+#tab_FileManagerPlugin_FileManager { padding: 0 !important; }
+#fileManagerHeader {
+    position: absolute !important;
+    top: 16px; left: 16px; right: 16px;
+    height: 40px;
+    overflow: visible !important;
+}
+#fileManagerHeader > div:first-child {
+    display: flex !important;
+    align-items: center;
+    gap: 0;
+    height: 40px;
+    width: 100% !important;
+}
+
+/* Breadcrumb: one joined strip of outlined chips, current folder in yellow */
+.fmPathSegment {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    margin: 0 0 0 -3px !important;
+    padding: 0 14px !important;
+    line-height: 1 !important;
+    font-family: var(--b-mono) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: var(--b-ink) !important;
+    background: var(--b-surface) !important;
+    border: 3px solid var(--b-line) !important;
+    box-sizing: border-box;
+    white-space: nowrap;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color .08s linear;
+}
+.fmPathSegment:first-child { margin-left: 0 !important; }
+.fmPathSegment::after { display: none !important; }
+.fmPathSegment:nth-child(2n) { background: var(--b-surface) !important; }
+.fmPathSegment:hover { background: var(--b-hover) !important; color: var(--b-ink) !important; }
+.fmPathSegment:active { background: var(--b-yellow) !important; color: #111111 !important; }
+.fmPathSegment:has(+ #editorFilename) {
+    background: var(--b-yellow) !important;
+    color: #111111 !important;
+    box-shadow: 4px 4px 0 var(--b-shadow);
+}
+.fmPathSegment.disabled, .fmPathSegment.disabled:nth-child(2n), .fmPathSegment.disabled:hover {
+    background: var(--b-muted-fill) !important; color: #111111 !important; cursor: default;
+}
+.fmPathSegment#editorFilename { color: #111111 !important; background: var(--b-green) !important; margin-left: 10px !important; }
+.fmPathSegment#editorFilename.dirty { background: var(--b-red) !important; }
+#editorFilenameChanges { margin-left: 12px; font-family: var(--b-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--b-ink-2) !important; }
+
+/* Toolbar: same black-framed joined strip as the instances header */
+#fmDisplaySwitcher {
+    float: none !important;
+    margin-left: auto;
+    display: inline-flex !important;
+    gap: 3px;
+    padding: 0;
+    background: var(--b-line);
+    border: 3px solid var(--b-line);
+    box-shadow: 4px 4px 0 var(--b-shadow);
+}
+#fmDisplaySwitcher[style*="none"] { display: none !important; }
+#fmDisplaySwitcher .toolIconButton {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 34px !important;
+    min-width: 34px;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: var(--b-surface) !important;
+    color: var(--b-ink) !important;
+    font-family: var(--b-mono) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transform: none !important;
+}
+#fmDisplaySwitcher .toolIconButton:not(.withCaption) { padding: 0 !important; width: 34px; }
+#fmDisplaySwitcher .toolIconButton .mat-icon { font-size: 20px !important; padding: 0 !important; margin: 0 !important; color: inherit !important; transition: transform .15s steps(3); }
+#fmDisplaySwitcher .toolIconButton:hover { background: var(--b-yellow) !important; color: #111111 !important; }
+#fmDisplaySwitcher .toolIconButton:active { background: #111111 !important; color: #ffffff !important; }
+#fmDisplaySwitcher .toolIconButton[title="Refresh Listing"]:hover .mat-icon { animation: bz-spin .6s steps(8) infinite; }
+
+/* List panel */
+#fileManagerList {
+    top: 76px !important;
+    left: 16px !important;
+    bottom: 22px !important;
+    margin-right: 22px;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+#fileManagerInfo { top: 76px !important; bottom: 22px !important; box-shadow: 6px 6px 0 var(--b-shadow) !important; }
+@media screen and (min-width: 1001px) {
+    #fileManagerInfo { right: 22px !important; }
+    #fileManagerList { right: 338px !important; margin-right: 0; }
+}
+@media screen and (max-width: 1000px) {
+    #fileManagerInfo.splitViewInfo.visible { left: calc(100% - 322px) !important; }
+}
+.fileManagerEntry {
+    gap: 14px !important;
+    min-height: 56px !important;
+    padding: 8px 14px !important;
+    border-bottom: 2px solid var(--b-line) !important;
+    transition: background-color .06s linear;
+}
+.fileManagerEntry:active { background: var(--b-yellow) !important; }
+.fileManagerEntry .iconContainer {
+    width: 38px !important;
+    height: 38px !important;
+    background: var(--b-surface-2);
+    border: 2px solid var(--b-line);
+    box-sizing: border-box;
+}
+.fileManagerEntry .fmMainIcon { font-size: 22px !important; padding: 0 !important; color: var(--b-ink) !important; }
+.fileManagerEntry .subIcon { display: none !important; }
+.fileManagerEntry.fmIsDirectory .iconContainer { background: var(--b-yellow); }
+.fileManagerEntry.fmIsVirtual .iconContainer { background: var(--b-sky); }
+.fileManagerEntry.fmIsArchive:not(.fmIsDirectory) .iconContainer { background: var(--b-orange); }
+.fileManagerEntry.fmIsDirectory .fmMainIcon,
+.fileManagerEntry.fmIsVirtual .fmMainIcon,
+.fileManagerEntry.fmIsArchive .fmMainIcon { color: #111111 !important; }
+.fileManagerEntry .fileEntryTitle { font-size: 14px !important; font-weight: 700 !important; color: var(--b-ink) !important; }
+.fileManagerEntry .fileEntrySubtitle {
+    font-family: var(--b-mono);
+    font-size: 11px !important;
+    color: var(--b-ink-3) !important;
+    letter-spacing: .02em;
+}
+.fileManagerEntry .fmSubtitleModified { opacity: 1 !important; font-size: 11px !important; }
+.fileManagerEntry .fileEntryKebab {
+    display: grid; place-items: center;
+    width: 30px; height: 30px;
+    padding: 0 !important;
+    font-size: 18px !important;
+    color: var(--b-ink) !important;
+    opacity: .55 !important;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+}
+.fileManagerEntry:hover .fileEntryKebab { opacity: 1 !important; }
+.fileManagerEntry .fileEntryKebab:hover { background: var(--b-surface); border-color: var(--b-line); }
+.fileManagerEntry.selected .iconContainer { background: var(--b-surface) !important; }
+.fileManagerEntry.selected .fileEntrySubtitle { color: #111111 !important; }
+
+/* Compact list */
+#fileManagerList.compact .fileManagerEntry { min-height: 0 !important; padding: 5px 14px !important; }
+#fileManagerList.compact .fileManagerEntry .iconContainer { width: 26px !important; height: 26px !important; }
+#fileManagerList.compact .fileManagerEntry .iconContainer .mat-icon { font-size: 16px !important; }
+#fileManagerList.compact .fileManagerEntry .fileEntryKebab { width: 26px; height: 26px; }
+
+/* Grid: each entry is its own small card */
+#fileManagerList.gridView { gap: 12px; padding: 12px !important; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important; }
+#fileManagerList.gridView .fileManagerEntry {
+    height: auto !important;
+    border: 3px solid var(--b-line) !important;
+    background: var(--b-surface);
+    box-shadow: 3px 3px 0 var(--b-shadow);
+}
+#fileManagerList.gridView .fileManagerEntry:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--b-shadow); }
+
+/* Info panel */
+#fileManagerInfo .fmInfoHeader { padding: 14px 14px 12px !important; border-bottom: 3px solid var(--b-line) !important; margin-bottom: 0 !important; }
+#fileManagerInfo .fmInfoIcon {
+    font-size: 24px !important;
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    background: var(--b-surface);
+    border: 2px solid var(--b-line);
+    color: var(--b-ink) !important;
+}
+#fileManagerInfo .fmInfoIcon.fmIsDirectory { background: var(--b-yellow); color: #111111 !important; }
+#fileManagerInfo .fmInfoIcon.fmIsVirtual { background: var(--b-sky); color: #111111 !important; }
+#fileManagerInfo .fmInfoIcon.fmIsArchive:not(.fmIsDirectory) { background: var(--b-orange); color: #111111 !important; }
+#fileManagerInfo .fmInfoHeader h3 { font-size: 14px !important; }
+#fileManagerInfo tr:nth-child(2n) { background: var(--b-inset) !important; }
+#fileManagerInfo tr { border-bottom: 1px solid var(--b-inset); }
+#fileManagerInfo th { font-family: var(--b-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--b-ink-3) !important; padding: 7px 14px !important; }
+#fileManagerInfo td { font-size: 13px; padding: 7px 14px 7px 0 !important; word-break: break-all; }
+#fileManagerInfo .infoViewActions { padding: 14px !important; gap: 10px !important; }
+
+/* Empty state, drop target, editor */
+#fmEmptyState { opacity: 1 !important; color: var(--b-ink-3) !important; font-family: var(--b-mono); }
+#fmEmptyState .mat-icon { color: var(--b-ink) !important; }
+#fileManagerDropNotice {
+    background: var(--b-yellow) !important;
+    color: #111111 !important;
+    border: 3px solid #111111 !important;
+    box-shadow: 10px 10px 0 #111111 !important;
+    font-family: var(--b-display);
+}
+#fileManagerDropNotice * { color: #111111 !important; }
+#editorContainer { margin: 76px 16px 16px; border: 3px solid var(--b-line); box-shadow: 6px 6px 0 var(--b-shadow); }
+
+@media screen and (max-width: 660px) {
+    #fileManagerHeader { top: 10px; left: 10px; right: 10px; }
+    #fileManagerList { top: 66px !important; left: 10px !important; margin-right: 16px; }
+    .fmPathSegment { max-width: 120px; }
+}
+
+/* Right-click / kebab menu: AMP clamps it to the window assuming ~178px wide,
+   so keep it that size (border included) and make it a tidy action list */
+.contextMenu.contextMenu {
+    width: 178px !important;
+    box-sizing: border-box !important;
+    padding: 0 0 6px !important;
+    box-shadow: 6px 6px 0 var(--b-shadow) !important;
+}
+.contextMenu.contextMenu h2 {
+    margin: 0 0 6px !important;
+    padding: 10px 12px !important;
+    font-family: var(--b-mono) !important;
+    font-size: 12px !important;
+    letter-spacing: .02em !important;
+    text-transform: none !important;
+    color: #111111 !important;
+    background: var(--b-yellow);
+    border-bottom: 3px solid var(--b-line);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.contextMenu.contextMenu .flexButtonGroup { padding: 0 6px; gap: 0; }
+.contextMenu.contextMenu button {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 32px;
+    margin: 0 0 4px !important;
+    padding: 6px 10px !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
+    font-size: 12px !important;
+    letter-spacing: .03em !important;
+    border-width: 2px !important;
+    box-shadow: none !important;
+}
+.contextMenu.contextMenu button span:not(.mat-icon) { top: 0 !important; }
+.contextMenu.contextMenu button .mat-icon { left: auto !important; right: 8px; top: 50% !important; transform: translateY(-50%) !important; font-size: 18px !important; opacity: 0; transition: opacity .1s !important; }
+.contextMenu.contextMenu button:hover { background: var(--b-yellow) !important; color: #111111 !important; }
+.contextMenu.contextMenu button.bgRed:hover { background: var(--b-red) !important; }
+.contextMenu.contextMenu button:hover .mat-icon { opacity: 1; }
+.contextMenu.contextMenu .buttonListSeparator { height: 0 !important; margin: 4px 0 8px !important; }
+
+/* ==========================================================================
+   Contrast sweep
+   AMP hard-codes white / pale-blue text in places that assume its dark
+   background. Each of these was found by checking every page (and every
+   hover state) for text that disappears into its background.
+   ========================================================================== */
+/* Tool buttons turn their icon white on hover (AMP expects a blue fill) */
+button.toolIconButton:hover span, .button.toolIconButton:hover span,
+a.button:hover, a.button:visited, a.button:active { color: inherit !important; }
+
+/* A hovered active tab keeps its yellow, and table header rows don't light up */
+.tabHeaderContainer .tabHeader.active:hover { background: var(--b-yellow) !important; color: #111111 !important; }
+table tbody tr:has(> th):hover { background: transparent !important; }
+
+/* Instances filter help icon (inline white) */
+.instanceViewToolbar > .mat-icon { color: var(--b-ink-3) !important; }
+.instanceViewToolbar > .mat-icon:hover { color: var(--b-ink) !important; }
+
+/* Settings: unit suffixes inside fields, and "restart required" notes */
+.settingsGroup .groupBody .settingLabel span.inputFieldSuffix {
+    color: var(--b-ink-3) !important;
+    font-family: var(--b-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.settingsGroup .groupBody .settingInfo { color: var(--b-link) !important; opacity: 1 !important; font-weight: 600; }
+
+/* Analytics */
+.analyticsSection .DataOverlay {
+    color: var(--b-ink) !important;
+    background: repeating-linear-gradient(-45deg, var(--b-page) 0 10px, var(--b-surface-2) 10px 20px) !important;
+}
+.analyticsSection .DataOverlay > div {
+    max-width: 640px;
+    padding: 22px 26px;
+    background: var(--b-surface);
+    border: 3px solid var(--b-line);
+    box-shadow: 6px 6px 0 var(--b-shadow);
+}
+.analyticsSection .DataOverlay h1, .analyticsSection .DataOverlay p, .analyticsSection .DataOverlay * { color: var(--b-ink) !important; }
+.analyticsSection .DataOverlay button, .analyticsSection .DataOverlay button * { color: #111111 !important; }
+#graphContainer #DemoDataOverlay { color: var(--b-ink-3) !important; }
+.analyticsSection .sectionHeader { align-items: center; gap: 12px; }
+.analyticsSection .sectionHeader .headerControls { gap: 0 !important; margin-left: auto; color: var(--b-ink) !important; }
+.analyticsSection .sectionHeader .headerControls div {
+    padding: 5px 10px;
+    margin-left: -2px;
+    font-family: var(--b-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    color: var(--b-ink) !important;
+    background: var(--b-surface);
+    border: 2px solid var(--b-line);
+}
+.analyticsSection .sectionHeader .headerControls div:hover { background: var(--b-hover); }
+.analyticsSection .sectionHeader .headerControls div.active { background: var(--b-yellow); color: #111111 !important; }
+.analyticsSection .map > span { color: var(--b-ink-3) !important; font-family: var(--b-mono); }
+.analyticsSection .sectionGridHeaders {
+    color: var(--b-ink-3) !important;
+    font-family: var(--b-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 2px solid var(--b-line) !important;
+}
+.analyticsSection .value .valPercent { color: var(--b-ink-3) !important; }
+.analyticsSection .dataEntry .progress { background: var(--b-hover) !important; }
+.analyticsSection .map svg g[id]:hover, .analyticsSection .map svg path[id]:hover { stroke: var(--b-yellow) !important; }
+.analyticsSection .map svg g[id]:active, .analyticsSection .map svg path[id]:active { stroke: var(--b-line) !important; }
+
+/* Column headers sit on the yellow header strip, so they stay ink in dark mode */
+table thead th, table thead th * { color: #111111 !important; }
+
+/* Square corners everywhere. AMP rounds a handful of things (the user/role
+   side list, avatars, tree expanders, card toolbars, store brand images),
+   some only at certain window sizes, so this is enforced globally. */
+*, *::before, *::after { border-radius: 0 !important; }
+#userInfo .icon, .sideItemList .item img { border: 2px solid var(--b-line); box-sizing: border-box; }
+
+/* Sidebar game art: a hard-edged block that always fills the sidebar width */
+#sideMenu .heroImage {
+    display: block;
+    width: 100% !important;
+    aspect-ratio: 460 / 215;
+    height: auto !important;
+    object-fit: cover;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    clip-path: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Warnings & disclaimers — one look everywhere, matching the Store's
+   third-party notice: flat orange card, ink text, heavy outline, hard shadow,
+   Archivo Black heading. (Success wells keep the same shape in green.)
+   ========================================================================== */
+.storeWarning,
+.analyticsSection .DataOverlay > div,
+p.inlineWarning,
+.well.warning, .well.info,
+.containerWarning,
+.ThirdPartyNotice,
+.wizardTab .wizardContents .warningHeader,
+#editorFileWarning {
+    background: var(--b-orange) !important;
+    background-image: none !important;
+    color: #111111 !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 6px 6px 0 var(--b-shadow) !important;
+    font-style: normal !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+}
+.well.good {
+    background: var(--b-green) !important;
+    border: 3px solid var(--b-line) !important;
+    box-shadow: 6px 6px 0 var(--b-shadow) !important;
+}
+.storeWarning *,
+.analyticsSection .DataOverlay > div *,
+p.inlineWarning *,
+.well.warning *, .well.info *, .well.good *,
+.containerWarning *,
+.ThirdPartyNotice *,
+.wizardTab .wizardContents .warningHeader *,
+#editorFileWarning * { color: #111111 !important; text-shadow: none !important; }
+
+.storeWarning h1, .storeWarning h2, .storeWarning h3,
+.analyticsSection .DataOverlay > div h1, .analyticsSection .DataOverlay > div h2,
+.well.warning h3, .well.info h3, .well.good h3,
+.ThirdPartyNotice h1, .ThirdPartyNotice h2, .ThirdPartyNotice h3 {
+    font-family: var(--b-display) !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    letter-spacing: .02em !important;
+    text-transform: uppercase !important;
+    margin: 0 0 8px !important;
+}
+.wizardTab .wizardContents .warningHeader { font-family: var(--b-display) !important; font-size: 14px !important; font-weight: 400 !important; padding: 12px 16px !important; }
+.analyticsSection .DataOverlay > div p { font-size: 14px; line-height: 1.5; }
+.analyticsSection .DataOverlay > div button { box-shadow: 4px 4px 0 #111111 !important; border-color: #111111 !important; }
+.well .mat-icon { font-size: 26px !important; }
+
+/* Smaller inline notices get a lighter shadow */
+p.inlineWarning, #editorFileWarning, .containerWarning { box-shadow: 4px 4px 0 var(--b-shadow) !important; }
+p.inlineWarning { padding: 12px 16px !important; }
+#editorFileWarning { padding: 6px 12px !important; font-weight: 700; margin-top: 10px; }
+#editorFileWarning button { background: var(--b-surface) !important; color: var(--b-ink) !important; }
+#editorFileWarning button * { color: var(--b-ink) !important; }
+.analyticsSection .DataOverlay > div { max-width: 640px; padding: 20px 24px !important; }
+.storeWarning { padding: 14px 28px 18px !important; }
+.well.warning, .well.info, .well.good { padding: 14px 18px !important; }
+.well button { white-space: nowrap; font-size: 12px !important; padding: 6px 10px !important; }
+
+/* ==========================================================================
+   Type scale — one set of sizes for every screen
+   Public Sans  : 12 meta · 14 body · 15 labels & menu · 18 sub-headings
+   JetBrains Mono: 11 uppercase labels, tags, table heads
+   Archivo Black: 15 card titles · 24 page titles · 28 empty-state titles
+   Buttons      : 13 (12 for slim/toolbar buttons)
+   AMP mixes Roboto Light and point sizes (8pt/10pt/11pt/12pt); this
+   replaces them all.
+   ========================================================================== */
+body { font-family: var(--b-font) !important; font-size: 14px; }
+.lightFont, .normalFont, .lf, h4,
+#sideMenu a, .subMenu a, .circleChart h2, .circleChart h4,
+#notificationContainer .notification .notificationTitle,
+.slimButton, input, select, textarea, option {
+    font-family: var(--b-font) !important;
+}
+h4 { font-weight: 800 !important; }
+h4 { font-size: 18px !important; }
+
+/* Body copy */
+p, td, li, .description, .settingInfo,
+.treeItemText .description, .permNodeDescription,
+.itemHeader p, .StoreCard p, .datastoreItem td {
+    font-size: 14px !important;
+    line-height: 1.45;
+}
+/* Secondary / meta text */
+.settingDescription, .settingDescription *, .desc, .subtitle,
+.InstanceList .ServerEntry .ServerEntryInfo .Notice h4,
+.storeHeader .subtitle {
+    font-size: 12px !important;
+    line-height: 1.4;
+}
+/* Field labels and menu items */
+.settingLabel, .settingLabel > span:not(.inputFieldSuffix), .treeName,
+.tabHeaderContainer .tabHeader { font-size: 15px !important; }
+#sideMenu a, #sideMenu a > div > span:first-child { font-size: 15px !important; font-weight: 700 !important; }
+.subMenuWell a, .subMenuWell a span, #sideMenu a.small, #sideMenu a.small span { font-size: 14px !important; }
+#sideMenu a .subtitle { font-size: 11px !important; }
+
+/* Inputs */
+input, select, textarea, option { font-size: 14px !important; }
+
+/* Buttons */
+button, .button, input[type=button], input[type=submit],
+button span:not(.mat-icon), .button span:not(.mat-icon) { font-size: 13px !important; }
+.slimButton, .slimButton span:not(.mat-icon),
+.ServerGroupActions .slimButton .label,
+#fmDisplaySwitcher .toolIconButton, #fmDisplaySwitcher .toolIconButton span:not(.mat-icon),
+.contextMenu.contextMenu button, .contextMenu.contextMenu button span:not(.mat-icon),
+.well button, .well button span:not(.mat-icon) { font-size: 12px !important; }
+
+/* Headings */
+.InstanceList .ServerEntry .ServerEntryHeader h3 { font-family: var(--b-font) !important; font-size: 18px !important; font-weight: 800 !important; }
+.bodyTab > h1, .bodyTab h1:not(.analyticsSection h1) { font-size: 28px !important; }
+.storeHeader > div:not(.mat-icon) > span:first-child { font-size: 44px !important; line-height: 1.05; }
+.storeHeader > div:not(.mat-icon) > span:nth-child(2) { font-size: 12px !important; }
+#tabInfo h2, .bodyTab > h2 { font-size: 24px !important; }
+.ServerGroupName > span { font-size: 15px !important; }
+#bgtext, #bgtext .tiny { font-size: 11px !important; }
+.permissionsHeader h4, .permissionsHeader h4 span { font-size: 18px !important; font-weight: 800 !important; }
+.InstanceList .ServerEntry .ServerEntryHeader h5 { font-size: 12px !important; }
+.InstanceList .ServerEntry.NewServerEntry h4 { font-family: var(--b-display) !important; font-size: 15px !important; font-weight: 400 !important; text-transform: uppercase; }
+.analyticsSection h1 { font-family: var(--b-display) !important; font-size: 15px !important; font-weight: 400 !important; text-transform: uppercase; }
+.analyticsSection .map > span, .analyticsSection .map > span a { font-size: 11px !important; }
+#statusActions span[data-bind*="text: ProtocolName"], #statusActions .listenPort .AppStatus, #statusActions .listenPort .AppStatus * { font-size: 11px !important; }
+#tabInfo h4 { font-size: 12px !important; font-weight: 500 !important; line-height: 1.3 !important; }
+
+/* ==========================================================================
+   Slide-icon buttons: AMP slides the label out of the button on hover to
+   reveal an icon. Here the label stays put and the icon sits beside it.
+   ========================================================================== */
+.slideIcon:hover span:not(.mat-icon), .slideIcon span:not(.mat-icon) { top: 0 !important; }
+button.slideIcon:has(> .mat-icon):not([style*="display: none"]), .button.slideIcon:has(> .mat-icon):not([style*="display: none"]) {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.slideIcon > span.mat-icon {
+    position: static !important;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+}
+/* Disabled buttons don't react to hover */
+button:disabled:hover, button.disabled:hover, .button.disabled:hover {
+    transform: none !important;
+    box-shadow: 4px 4px 0 var(--b-shadow) !important;
+    cursor: not-allowed;
+}
+
+/* File manager breadcrumb: centre the text in its 40px box */
+.fmPathSegment { line-height: 34px !important; }
+
+
+/* ==========================================================================
+   No doubled borders: wherever two 3px outlines would sit side by side,
+   one of them gives way (or the inner box is inset so both read cleanly)
+   ========================================================================== */
+/* Sidebar: menu items are inset tiles, so the selected tile never sits
+   against the sidebar's own edge; the Configuration flyout sits inside the
+   sidebar rather than drawing a second frame over it */
+@media screen and (min-width: 1001px) {
+    #sideMenuPresenter > a, #sideMenuPresenter > .multiMenuContainer > a,
+    .subMenuWell a {
+        width: auto !important;
+        margin: 2px 12px 2px 10px !important;
+        box-sizing: border-box;
+    }
+    #sideMenuContainer .subMenuWell.appear {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+#sideMenuContainer .subMenuWell.appear { border-top: none !important; }
+
+/* Settings tabs hang from the top bar */
+.tabHeaderContainer .tabHeader { border-top: none !important; }
+
+/* Tables: the last row doesn't stack its divider on the table's frame */
+table tbody tr:last-child > td, table tbody tr:last-child > th { border-bottom: none !important; }
+table + button, table + .button, table + div > button:first-child { margin-top: 14px !important; }
+
+/* Joined icon-button groups (list editors): neighbours share one line */
+.listEditButton + .listEditButton { margin-left: -3px !important; }
+
+/* User / role lists: the side list hangs from the top bar beside the
+   sidebar, and its Create button is an inset button, not a second frame */
+.sideItemList { border-top: none !important; border-left: none !important; }
+
+/* Console: an inset terminal with its own frame, the user list as a framed
+   column beside it, and the command line as a separate bar underneath */
+#consoleContainer { left: 16px !important; right: 22px !important; top: 66px !important; bottom: 76px !important; }
+#consoleArea { box-sizing: border-box !important; margin-right: 210px !important; }
+#consoleUsers {
+    width: 192px !important;
+    box-sizing: border-box;
+    background: var(--b-surface) !important;
+    border: 3px solid var(--b-line) !important;
+    box-shadow: 6px 6px 0 var(--b-shadow);
+}
+#consoleLine { margin-top: 14px !important; }
+#consoleLineEntry { margin: 0 !important; border: 3px solid var(--b-line) !important; box-shadow: 6px 6px 0 var(--b-shadow); }
+
+/* Role permissions: the filter box sits above the tree, not on it */
+#rolePermissionsSelector { margin-top: 10px !important; }
+
+/* Permission trees: a collapsed branch is a zero-height box, so its top and
+   bottom borders stacked into a heavy 6px bar under every row. Branches are
+   now an indented rule on the left only, and nothing when collapsed. */
+.treeContents { border: none !important; border-left: 3px solid var(--b-line) !important; margin-left: 12px !important; }
+.treeContents[style*="max-height: 0"] { border-left-width: 0 !important; }
+
+/* Every button in the user / role side list is inset, not just the first */
+.sideItemList > button, .sideItemList > .slimButton {
+    margin: 10px 10px 0 !important;
+    width: calc(100% - 20px) !important;
+    box-sizing: border-box;
+}
+.sideItemList > button + div, .sideItemList > .slimButton + div { margin-top: 10px; border-top: 2px solid var(--b-line); }
+
+/* Stand-alone icon buttons side by side get a gap (joined groups and the
+   instance card toolbar keep sharing one line) */
+:not(.ServerEntryActions) > .iconButton:not(.first):not(.middle) + .iconButton:not(.middle):not(.last) { margin-left: 8px !important; }
+
+/* Empty tables: the header strip doesn't stack on the table's bottom edge */
+table:not(:has(tbody tr)) > thead, table:not(:has(tbody tr)) > thead th { border-bottom: none !important; }
+/* AMP keeps hidden phone-layout rows after the last visible row */
+@media screen and (min-width: 661px) {
+    table tbody tr:has(+ tr.noDesktopRow:last-child) > td { border-bottom: none !important; }
+}
+#rolePermissionsSelector .treeEntry { padding-top: 3px; padding-bottom: 3px; }
+
+/* Top bar line runs unbroken: the sidebar scrolls inside its menu (so its
+   scrollbar no longer cuts the avatar row short), the version text becomes
+   a footer, and settings tabs start just below the bar instead of on it */
+@media screen and (min-width: 1001px) {
+    #sideMenuContainer { overflow: hidden !important; }
+    #sideMenu { flex: 1 1 auto; min-height: 0; overflow-y: auto !important; overflow-x: hidden !important; scrollbar-width: thin; }
+    #userInfo { flex: 0 0 auto; width: auto !important; align-self: stretch; }
+    #bgtext { flex: 0 0 auto; border-top: 2px solid var(--b-line); padding-top: 8px; background: var(--b-chrome); }
+}
+.tabHeaderContainer { top: -21px !important; }
+/* AMP opens Configuration by sliding the menu out sideways and showing the
+   flyout beside it, so the menu mustn't clip while a flyout is open */
+@media screen and (min-width: 1001px) {
+    #sideMenu.childOpen { overflow: visible !important; }
+}
+
+/* Search bar focus: one yellow shadow under the field and the search button
+   together, rather than just the field */
+#barTop #topSearchBox:focus-within { filter: drop-shadow(4px 4px 0 var(--b-yellow)); }
+#barTop #topSearchBox input.searchBox:focus { box-shadow: inset 3px 3px 0 var(--b-inset) !important; border-color: var(--b-line) !important; outline: none !important; }
+
+
+/* ==========================================================================
+   Task notifications (bottom-right panel: creating an instance, updates,
+   downloads). AMP draws these in its own blue; here they're a framed panel
+   with a yellow header and a yellow progress bar with moving hatching.
+   ========================================================================== */
+#notificationContainer {
+    background: var(--b-chrome) !important;
+    color: var(--b-ink) !important;
+    border: 3px solid var(--b-line) !important;
+    border-radius: 0 !important;
+    box-shadow: 6px 6px 0 var(--b-shadow) !important;
+}
+#notificationContainer .notificationBanner,
+#notificationContainer .notificationBanner:hover {
+    background: var(--b-yellow) !important;
+    color: #111111 !important;
+    border-bottom: 3px solid var(--b-line);
+    font-family: var(--b-display);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+#notificationContainer .notificationBanner * { color: #111111 !important; }
+#notificationContainer .notificationContents { padding: 10px 14px 4px 10px; }
+#notificationContainer .notification { margin-bottom: 10px; padding: 10px 12px !important; }
+#notificationContainer .notification:hover { background: var(--b-hover) !important; }
+#notificationContainer .notification.failed, #notificationContainer .notification:hover.failed { background: var(--b-red) !important; }
+#notificationContainer .notification.failed * { color: #111111 !important; }
+#notificationContainer .notification .notificationTitle { font-weight: 800 !important; font-size: 14px; }
+#notificationContainer .notificationDescription { font-size: 12px; color: var(--b-ink-2); margin-top: 2px; }
+#notificationContainer button {
+    height: 26px !important; min-height: 26px !important;
+    padding: 0 10px !important;
+    background: var(--b-surface) !important;
+    color: var(--b-ink) !important;
+    border: 2px solid var(--b-line) !important;
+    box-shadow: 2px 2px 0 var(--b-shadow) !important;
+    font-size: 11px !important;
+}
+#notificationContainer button.bgRed { background: var(--b-red) !important; color: #111111 !important; }
+.notificationProgessContainer {
+    height: 22px !important;
+    margin-top: 8px !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: 2px solid var(--b-line) !important;
+    background: var(--b-field) !important;
+}
+.notificationProgressBar { background: var(--b-yellow) !important; border-right: 2px solid var(--b-line); box-sizing: border-box; }
+.notificationProgressBar::before {
+    background-image: repeating-linear-gradient(45deg, transparent 0 9px, rgba(17, 17, 17, .22) 9px 18px) !important;
+}
+.notificationSpeed {
+    text-shadow: none !important;
+    color: #111111 !important;
+    font-family: var(--b-mono);
+    font-size: 11px !important;
+    font-weight: 700;
+    line-height: 18px !important;
+    left: 6px !important;
+}
+.notificationSpeed:not(:empty) { background: var(--b-yellow); padding: 0 4px; }
+/* AMP leaves an empty "Notifications (0)" bar behind after a task finishes */
+#notificationContainer:not(:has(.notification)) { display: none !important; }
+
+/* Instance card art: AMP dims it to 30% brightness and tints stopped
+   servers blue. Show it at full brightness (softly greyed when stopped);
+   the header and notice bands are light washes, with a text shadow keeping
+   the white text readable over bright art */
+.InstanceList .ServerEntry .ServerEntryImage.Main { filter: none !important; }
+.InstanceList .ServerEntry .ServerEntryImage.Blur { filter: brightness(.85) blur(14px) !important; }
+.InstanceList .ServerEntry.statusOffline .ServerEntryImage.Main, .InstanceList .ServerEntry .ServerEntryImage.Main.Offline { filter: grayscale(.75) brightness(.95) !important; }
+.InstanceList .ServerEntry.statusOffline .ServerEntryImage.Blur, .InstanceList .ServerEntry .ServerEntryImage.Blur.Offline { filter: grayscale(1) brightness(.7) blur(14px) !important; }
+.InstanceList .ServerEntry .ServerEntryTop { background: linear-gradient(180deg, rgba(17, 17, 17, .62), rgba(17, 17, 17, .12)) !important; }
+.InstanceList .ServerEntry .ServerEntryTop * { text-shadow: 0 1px 2px rgba(0, 0, 0, .85), 0 0 8px rgba(0, 0, 0, .5) !important; }
+.InstanceList .ServerEntry .ServerEntryTop .ServerEntryStatus, .InstanceList .ServerEntry .ServerEntryTop .ServerEntryStatus * { text-shadow: none !important; }
+.InstanceList .ServerEntry .ServerEntryInfo .Notice { background: rgba(17, 17, 17, .6) !important; }
+.InstanceList .ServerEntry { background-image: none !important; }
+
+
+/* ==========================================================================
+   Loading animation (page refresh / login "Loading plugins…", modal waits): AMP's white
+   spinning rings become the toy brick hopping in place — it jumps, does a
+   full flip and lands with a squash, with its shadow shrinking under it
+   ========================================================================== */
+@keyframes bz-brick-hop {
+    0%   { transform: translateY(0) rotate(0deg) scale(1.08, .9); }
+    12%  { transform: translateY(0) rotate(0deg) scale(1, 1); }
+    45%  { transform: translateY(-34px) rotate(-180deg) scale(1, 1); }
+    78%  { transform: translateY(0) rotate(-360deg) scale(1, 1); }
+    88%  { transform: translateY(0) rotate(-360deg) scale(1.1, .86); }
+    100% { transform: translateY(0) rotate(-360deg) scale(1, 1); }
+}
+@keyframes bz-brick-shadow {
+    0%, 12%, 78%, 100% { transform: translateX(-50%) scaleX(1); opacity: .9; }
+    45%                { transform: translateX(-50%) scaleX(.45); opacity: .35; }
+}
+.loader, #loginSpinner, #modalLoader {
+    position: relative !important;
+    width: 84px !important;
+    height: 96px !important;
+    margin: 12px auto 18px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: none !important;
+    animation: none !important;
+    scale: 1 !important;
+    text-indent: 0 !important;
+    overflow: visible !important;
+}
+.loader::before {
+    content: '';
+    position: absolute;
+    left: 6px; right: 6px; bottom: 22px;
+    height: 50px;
+    background: var(--b-logo) center / contain no-repeat;
+    transform-origin: 50% 60%;
+    animation: bz-brick-hop 1.1s cubic-bezier(.3, 0, .3, 1) infinite;
+}
+.loader::after {
+    content: '';
+    position: absolute;
+    left: 50%; bottom: 8px;
+    width: 64px; height: 8px;
+    border-radius: 0 !important;
+    background: var(--b-line);
+    transform: translateX(-50%);
+    animation: bz-brick-shadow 1.1s cubic-bezier(.3, 0, .3, 1) infinite;
+}
+.loader .loader2 { display: none !important; }
+#loginContainer .loginBusy h3, .loginBusy h3 {
+    font-family: var(--b-display) !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    line-height: 1.35;
+    color: var(--b-ink) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+    .loader::before, .loader::after { animation: none !important; }
+}
+
+
+/* File manager right-click menu: icon first, label beside it, both centred
+   on the row and left-aligned, the same on every item */
+.contextMenu.contextMenu button:not([style*="display: none"]) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px;
+    text-align: left !important;
+}
+.contextMenu.contextMenu button > span:not(.mat-icon) { flex: 1 1 auto; min-width: 0; top: 0 !important; }
+.contextMenu.contextMenu button > .mat-icon {
+    order: -1;
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    flex: 0 0 18px;
+    width: 18px !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+}
+
+/* Safety net: AMP hides things by writing display:none inline. Some theme
+   rules force a display value with !important, which would bring those
+   hidden items back (e.g. a second "Download" in the right-click menu).
+   The doubled :not(#id) gives this rule higher specificity than any of them. */
+[style*="display: none"]:not(#bz-x):not(#bz-y), [style*="display:none"]:not(#bz-x):not(#bz-y) { display: none !important; }
+
+/* ==========================================================================
+   Small screens & reduced motion
+   ========================================================================== */
+@media screen and (max-width: 660px) {
+    #sideMenuContainer .subMenuWell.appear { background: var(--b-chrome) !important; }
+    .InstanceList .ServerEntry:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Phones (660px and below): the open menu spans the top of the page as a
+   grid of tiles and pushes the page content down below it, instead of a
+   drawer that slides in from the side over the page. Sub-menus (e.g. an
+   instance's Configuration menu) replace the tiles with their own grid. */
+@media screen and (max-width: 660px) {
+    html:has(> body > #sideMenuContainer.appear) { height: auto !important; overflow-y: auto !important; }
+    body:has(> #sideMenuContainer.appear) { display: flex !important; flex-direction: column !important; height: auto !important; min-height: 100dvh; padding-top: 51px !important; box-sizing: border-box; overflow-y: auto !important; }
+    #sideMenuContainer.appear { position: relative !important; order: -1; inset: auto !important; width: 100% !important; height: auto !important; max-height: none !important; flex: none !important; margin: 0 !important; transform: none !important; border-right: none !important; border-bottom: 3px solid var(--b-line) !important; box-shadow: none !important; }
+    #mainBody.appear { position: relative !important; inset: auto !important; width: 100% !important; height: calc(100dvh - 51px) !important; flex: none !important; transform: none !important; }
+    #sideMenuContainer.appear #sideMenu { width: 100% !important; height: auto !important; max-height: none !important; overflow: visible !important; padding: 10px !important; box-sizing: border-box; }
+    #sideMenuContainer.appear .heroImage,
+    #sideMenuContainer.appear #bgtext,
+    #sideMenuContainer.appear > #sideMenu.childOpen > .menuTitle,
+    #sideMenuContainer.appear .subMenuWell:not(.appear) { display: none !important; }
+    /* Brick logo + "Main Menu" heading above the tiles */
+    #sideMenuContainer.appear > #sideMenu:not(.childOpen) > .menuTitle { display: flex !important; align-items: center; gap: 10px; margin: 0 0 10px !important; padding: 0 !important; }
+
+    #sideMenuContainer.appear #sideMenuPresenter,
+    #sideMenuContainer.appear .subMenuWell.appear { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px !important; width: 100% !important; }
+    #sideMenuContainer.appear #sideMenuPresenter > .multiMenuContainer,
+    #sideMenuContainer.appear .subMenuWell.appear > div:not(.menuTitle) { display: contents !important; }
+    #sideMenuContainer.appear .subMenuWell.appear { position: static !important; grid-column: 1 / -1; height: auto !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; background: transparent !important; }
+    #sideMenuContainer.appear .subMenuWell.appear > .menuTitle { grid-column: 1 / -1; display: block !important; margin: 0 !important; padding: 0 0 2px !important; }
+
+    /* Tiles */
+    #sideMenuContainer.appear #sideMenu a {
+        position: relative !important;
+        display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+        gap: 3px !important; min-height: 58px !important; height: auto !important; width: auto !important;
+        margin: 0 !important; padding: 6px 4px !important; box-sizing: border-box;
+        text-align: center; line-height: 1.15 !important;
+        border: 3px solid var(--b-line) !important; background: var(--b-surface) !important; box-shadow: 3px 3px 0 var(--b-shadow) !important;
+    }
+    #sideMenuContainer.appear #sideMenu a.selected { background: var(--b-yellow) !important; }
+    #sideMenuContainer.appear #sideMenu a > div { display: block !important; }
+    #sideMenuContainer.appear #sideMenu a span,
+    #sideMenuContainer.appear #sideMenu a div { font-size: 12px !important; font-weight: 700 !important; margin: 0 !important; }
+    #sideMenuContainer.appear #sideMenu a > .mat-icon:not(.warn) { font-size: 22px !important; }
+    #sideMenuContainer.appear #sideMenu a .subtitle,
+    #sideMenuContainer.appear #sideMenu a.hasNotice::after,
+    #sideMenuContainer.appear .multiMenuContainer > a > .mat-icon:last-child { display: none !important; }
+    #sideMenuContainer.appear #sideMenu a > .mat-icon.warn { position: absolute !important; top: -7px !important; right: -7px !important; width: 20px !important; height: 20px !important; display: grid !important; place-items: center; font-size: 14px !important; color: #111111 !important; background: var(--b-orange) !important; border: 2px solid #111111 !important; }
+    #sideMenuContainer.appear #sideMenu a > .mat-icon.warn[style*="none"] { display: none !important; }
+
+    /* With a sub-menu open, only its own tiles show */
+    #sideMenu.childOpen #sideMenuPresenter > a,
+    #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer > a,
+    #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer:not(:has(> .subMenuWell.appear)) { display: none !important; }
+}
+
+/* Tablets (661-1000px): opening a sub-menu from the icon rail (e.g. an
+   instance's Configuration menu) shows it across the top of the page as a
+   grid of tiles that pushes the page content down, the same as on phones.
+   Back returns to the icon rail. */
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    html:has(> body > #sideMenuContainer.childOpen) { height: auto !important; overflow-y: auto !important; }
+    body:has(> #sideMenuContainer.childOpen) { display: flex !important; flex-direction: column !important; height: auto !important; min-height: 100dvh; padding-top: 51px !important; box-sizing: border-box; overflow-y: auto !important; }
+    #sideMenuContainer.childOpen { position: relative !important; order: -1; inset: auto !important; width: 100% !important; height: auto !important; max-height: none !important; flex: none !important; margin: 0 !important; transform: none !important; border-right: none !important; border-bottom: 3px solid var(--b-line) !important; box-shadow: none !important; }
+    body:has(> #sideMenuContainer.childOpen) > #mainBody { position: relative !important; inset: auto !important; width: 100% !important; height: calc(100dvh - 51px) !important; flex: none !important; transform: none !important; }
+    #sideMenuContainer.childOpen #sideMenu { width: 100% !important; height: auto !important; max-height: none !important; overflow: visible !important; padding: 10px !important; box-sizing: border-box; }
+    #sideMenuContainer.childOpen .heroImage,
+    #sideMenuContainer.childOpen #bgtext,
+    #sideMenuContainer.childOpen > #sideMenu > .menuTitle,
+    #sideMenuContainer.childOpen .subMenuWell:not(.appear) { display: none !important; }
+
+    #sideMenuContainer.childOpen #sideMenuPresenter,
+    #sideMenuContainer.childOpen .subMenuWell.appear { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px !important; width: 100% !important; }
+    #sideMenuContainer.childOpen #sideMenuPresenter > .multiMenuContainer,
+    #sideMenuContainer.childOpen .subMenuWell.appear > div:not(.menuTitle) { display: contents !important; }
+    #sideMenuContainer.childOpen .subMenuWell.appear { position: static !important; grid-column: 1 / -1; height: auto !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; background: transparent !important; }
+    #sideMenuContainer.childOpen .subMenuWell.appear > .menuTitle { grid-column: 1 / -1; display: block !important; margin: 0 !important; padding: 0 0 2px !important; }
+
+    /* Tiles */
+    #sideMenuContainer.childOpen #sideMenu a {
+        position: relative !important;
+        display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+        gap: 3px !important; min-height: 58px !important; height: auto !important; width: auto !important;
+        margin: 0 !important; padding: 6px 4px !important; box-sizing: border-box;
+        text-align: center; line-height: 1.15 !important;
+        border: 3px solid var(--b-line) !important; background: var(--b-surface) !important; box-shadow: 3px 3px 0 var(--b-shadow) !important;
+    }
+    #sideMenuContainer.childOpen #sideMenu a.selected { background: var(--b-yellow) !important; }
+    #sideMenuContainer.childOpen #sideMenu a > div { display: block !important; }
+    #sideMenuContainer.childOpen #sideMenu a span,
+    #sideMenuContainer.childOpen #sideMenu a div { font-size: 12px !important; font-weight: 700 !important; margin: 0 !important; }
+    #sideMenuContainer.childOpen #sideMenu a > .mat-icon:not(.warn) { font-size: 22px !important; }
+    #sideMenuContainer.childOpen #sideMenu a .subtitle,
+    #sideMenuContainer.childOpen #sideMenu a.hasNotice::after,
+    #sideMenuContainer.childOpen .multiMenuContainer > a > .mat-icon:last-child { display: none !important; }
+    #sideMenuContainer.childOpen #sideMenu a > .mat-icon.warn { position: absolute !important; top: -7px !important; right: -7px !important; width: 20px !important; height: 20px !important; display: grid !important; place-items: center; font-size: 14px !important; color: #111111 !important; background: var(--b-orange) !important; border: 2px solid #111111 !important; }
+    #sideMenuContainer.childOpen #sideMenu a > .mat-icon.warn[style*="none"] { display: none !important; }
+
+    /* With a sub-menu open, only its own tiles show */
+    #sideMenu.childOpen #sideMenuPresenter > a,
+    #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer > a,
+    #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer:not(:has(> .subMenuWell.appear)) { display: none !important; }
+
+    /* The icon rail is replaced by the tile panel, so the page starts at the left edge */
+    body:has(> #sideMenuContainer.childOpen) .bodyTab:not(.wizardTab) { left: 0 !important; }
+}
+
+/* Instance group toolbar (Refresh / Start All / Stop All / Update All /
+   Create Instance): every button is the same width, so none sticks out
+   and the black toolbar never shows past the last button. Tablets stack
+   each button's icon above its label so all five fit on one row; phones
+   stack the buttons top to bottom at full width, labels shown. */
+.ServerGroupHeader .ServerGroupActions { display: inline-grid !important; grid-auto-flow: column !important; grid-auto-columns: minmax(0, 1fr) !important; max-width: 100% !important; box-sizing: border-box; }
+.ServerGroupHeader .ServerGroupActions > button,
+.ServerGroupHeader .ServerGroupActions > .button { width: auto !important; min-width: 0 !important; margin: 0 !important; justify-content: center !important; text-align: center; white-space: normal !important; }
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    .ServerGroupHeader .ServerGroupActions > button,
+    .ServerGroupHeader .ServerGroupActions > .button { flex-direction: column !important; align-items: center !important; gap: 2px !important; padding: 6px 4px !important; height: auto !important; }
+    .ServerGroupHeader .ServerGroupActions > button .mat-icon { margin: 0 !important; }
+}
+@media screen and (max-width: 660px) {
+    .ServerGroupHeader .ServerGroupName { flex-direction: column !important; align-items: stretch !important; gap: 10px !important; width: 100% !important; }
+    .ServerGroupHeader .ServerGroupActions { display: grid !important; grid-auto-flow: row !important; grid-auto-columns: auto !important; grid-template-columns: 1fr !important; width: 100% !important; }
+    .ServerGroupHeader .ServerGroupActions > button,
+    .ServerGroupHeader .ServerGroupActions > .button { gap: 10px !important; padding: 8px 12px !important; border-right: none !important; border-bottom: 3px solid #111111 !important; }
+    .ServerGroupHeader .ServerGroupActions > :last-child { border-bottom: none !important; }
+    .ServerGroupHeader .ServerGroupActions .label { display: inline !important; }
+}
+
+/* ==========================================================================
+   Phone & tablet pass (tested page by page at 375px and 768px)
+   ========================================================================== */
+
+/* Phones: the top bar gets a second row so the search box is full width,
+   and the page title shortens with "..." instead of pushing it off screen */
+@media screen and (max-width: 660px) {
+    #barTop { flex-wrap: wrap !important; align-content: flex-start; row-gap: 0 !important; height: 100px !important; box-sizing: border-box; }
+    #barTop #tabInfo { flex: 1 1 0 !important; min-width: 0 !important; height: 48px !important; overflow: hidden; }
+    #barTop #tabTitle, #barTop #tabCaption { white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+    #barTop #tabTitle { font-size: 22px !important; }
+    #barTop #topSearchBox { order: 3; flex: 1 1 100% !important; width: auto !important; max-width: none !important; height: 40px !important; margin: 4px 8px 0 !important; }
+    #barTop #topSearchBox .searchBox { flex: 1 1 auto !important; width: auto !important; min-width: 0 !important; }
+    #mainBody { top: 100px !important; }
+    #mainBody.appear { height: calc(100dvh - 100px) !important; }
+    body:has(> #sideMenuContainer.appear) { padding-top: 100px !important; }
+    #searchResults { top: 100px !important; }
+
+    /* Instances page: the Filter box gets its own full-width row */
+    .instanceViewToolbar { flex-wrap: wrap !important; row-gap: 10px; height: auto !important; }
+    .instanceViewToolbar > input { order: -1; flex: 1 1 100% !important; width: auto !important; min-width: 0 !important; }
+
+    /* Console: the user list is hidden on phones, so the output uses the full width */
+    #consoleArea { margin-right: 0 !important; }
+    #consoleContainer { left: 8px !important; right: 8px !important; }
+    #consoleArea .consoleEntry { font-size: 12px !important; }
+
+    /* Settings pages: AMP pins the tab strip to the bottom of the screen on
+       phones; keep it a bar there instead of stretching it to full height */
+    #tab_settings .tabHeaderContainer { top: auto !important; bottom: 0 !important; height: auto !important; z-index: 30 !important; border-top: 3px solid var(--b-line) !important; background: var(--b-chrome) !important; padding-top: 6px !important; padding-bottom: calc(6px + env(safe-area-inset-bottom)) !important; }
+    #tab_settings .tabHeaderContainer .tabHeader { height: auto !important; flex: 0 0 auto !important; }
+    #tab_settings { padding-bottom: 70px !important; }
+
+    /* Store: one card per row, fitted to the screen */
+    .StoreList { grid-template-columns: minmax(0, 1fr) !important; }
+    .StoreList .StoreCard { width: auto !important; min-width: 0 !important; max-width: none !important; }
+
+    /* Instance status: full-width cards; port rows put the status badge on its own line */
+    #statusActions > div { flex: 1 1 100% !important; width: 100% !important; }
+    #statusActions .listenPort { column-gap: 8px !important; }
+    #statusActions .listenPort > * { min-width: 0; overflow-wrap: anywhere; }
+    #statusActions .listenPort:has(> .AppStatus) { grid-template-columns: 1fr auto auto !important; row-gap: 6px !important; }
+    #statusActions .listenPort > .AppStatus { grid-column: 1 / -1; justify-self: start; }
+
+    #sideMenuContainer.appear.childOpen #userInfo { display: none !important; }
+}
+#statusActions > div { box-sizing: border-box !important; }
+
+/* Sub-menus (e.g. Configuration) are one swipeable row of tiles. AMP keeps a
+   sub-menu open after you pick a page from it, and a theme can't close it,
+   so it only takes one short row above the page. */
+@media screen and (max-width: 660px) {
+    #sideMenuContainer.appear #sideMenu .subMenuWell.appear { display: flex !important; flex-wrap: nowrap !important; gap: 8px !important; overflow-x: auto !important; overflow-y: hidden !important; padding: 0 3px 6px 0 !important; scroll-snap-type: x proximity; scrollbar-width: thin; }
+    #sideMenuContainer.appear #sideMenu .subMenuWell.appear > .menuTitle { display: none !important; }
+    #sideMenuContainer.appear #sideMenu .subMenuWell.appear a { flex: 0 0 96px !important; scroll-snap-align: start; }
+}
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    #sideMenuContainer.childOpen #sideMenu .subMenuWell.appear { display: flex !important; flex-wrap: nowrap !important; gap: 8px !important; overflow-x: auto !important; overflow-y: hidden !important; padding: 0 3px 6px 0 !important; scroll-snap-type: x proximity; scrollbar-width: thin; }
+    #sideMenuContainer.childOpen #sideMenu .subMenuWell.appear > .menuTitle { display: none !important; }
+    #sideMenuContainer.childOpen #sideMenu .subMenuWell.appear a { flex: 0 0 96px !important; scroll-snap-align: start; }
+}

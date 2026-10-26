@@ -1,0 +1,19 @@
+{
+  "Name": "amp-brutalist-dark-flame",
+  "Version": "1.0",
+  "UpdatedDate": "2026/10/14",
+  "Description": "Neo-brutalist dark theme with a flame orange-red accent. Neo-brutalism is a web design style built on raw, honest shapes: thick black outlines, square corners, solid offset shadows with no blur, flat high-contrast colour and chunky bold type. This version uses tinted slate panels, Archivo Black headings, monospace labels and a toy-brick logo, and restyles every AMP screen: instances, status, console, file manager, settings, schedules, backups, store, analytics and login.",
+  "URL": "https://github.com/jleybourne",
+  "Author": "Jayden",
+  "Tags": [
+    "Contributor",
+    "Dark",
+    "Brutalist",
+    "Neo-Brutalism",
+    "Bold",
+    "Flat",
+    "Retro",
+    "Red",
+    "Neon"
+  ]
+}
